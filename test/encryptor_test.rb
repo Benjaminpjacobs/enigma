@@ -46,7 +46,18 @@ class EncryptorTest < Minitest::Test
     assert_equal 4, enigma.date_into_offset.length
   end
   def test_it_can_convert_date_offset
-    enigma = Encryptor.new("hi, my name is bob", 98763, Date.new(2001,5, 5))
+    enigma = Encryptor.new("hi, my name is bob", 12345, Date.new(2001,5, 5))
     assert_equal [1,0,0,1], enigma.date_into_offset
+  end
+  def test_can_create_roto_offset
+    enigma = Encryptor.new("hi, my name is bob", 12345, Date.new(2001,5, 5))
+    expected = [13, 23, 34, 46]
+    actual =  enigma.rotation_and_offset
+    assert_equal expected, actual
+  end
+  def test_cipher_letter
+    enigma = Encryptor.new("hello")
+    actual = enigma.cipher(1, "A")
+    assert_equal "B", actual
   end
 end

@@ -26,10 +26,17 @@ class Encryptor
   def date_into_offset
     date.nil? ? OffsetGen.new.convert_into_offset : OffsetGen.new(date).convert_into_offset
   end
-  
 
-  # def cipher(key)
-  #   cipher_base = ("0".."z").to_a
-  #   cipher_base.zip(cipher_base.rotate(@roto_offset[key-1]))
-  # end
+  def rotation_and_offset
+    combo = key_into_rotation.zip(date_into_offset)
+    combo.map!{|sub_array| sub_array.inject(&:+)}
+  end
+  
+  def cipher(key, value)
+    cipher_base = ("0".."z").to_a
+    cipher_array = cipher_base.zip(cipher_base.rotate(key))
+    cipher_hash = {}
+    cipher_array.each{|sub_array| cipher_hash[sub_array[0]] = sub_array[1] }
+    cipher_hash[value]
+  end
 end
