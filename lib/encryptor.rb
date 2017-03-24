@@ -35,8 +35,14 @@ class Encryptor
   def cipher(key, value)
     cipher_base = ("0".."z").to_a
     cipher_array = cipher_base.zip(cipher_base.rotate(key))
+    cipher_hash(cipher_array, value)
+  end
+
+  def cipher_hash(array, value)
     cipher_hash = {}
-    cipher_array.each{|sub_array| cipher_hash[sub_array[0]] = sub_array[1] }
+    array.each do |sub_array| 
+      cipher_hash[sub_array[0]] = sub_array[1]
+    end
     cipher_hash[value]
   end
 end

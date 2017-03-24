@@ -25,14 +25,6 @@ class OffsetTest < Minitest::Test
     refute Date.today == generator.date
   end
   
-  
-  def test_format_date
-    date = Date.new(2001, 2, 13)
-    generator = OffsetGen.new(date)
-    formatted_date = 130201 #day, month, year
-    assert_equal formatted_date, generator.format_date
-  end
-  
   def test_convert_into_offset
     date = Date.new(2001, 2, 13)
     generator = OffsetGen.new(date)
