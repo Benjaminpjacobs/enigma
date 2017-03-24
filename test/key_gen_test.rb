@@ -26,6 +26,13 @@ class KeyGenTest < Minitest::Test
     seperated_nums = key_gen.key_into_array(number)
     assert_equal [8,3,4,5,7], seperated_nums
   end
+
+   def test_key_into_array_with_zeros
+    key_gen = KeyGen.new
+    number = 10013
+    seperated_nums = key_gen.key_into_array(number)
+    assert_equal [1,0,0,1,3], seperated_nums
+  end
   
   def test_output_rotations
     key_gen = KeyGen.new

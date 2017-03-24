@@ -45,4 +45,6 @@ class Encryptor
     end
     cipher_hash[value]
   end
+
+
 end
