@@ -46,5 +46,19 @@ class Encryptor
     cipher_hash[value]
   end
 
-
+  def encrypt
+    rotation = rotation_and_offset
+    parse
+    split_into_sub_arrays.each_index.map do |sub, idx|
+      if sub[0]
+        cipher(sub[0],rotation[0])
+      elsif sub[1]
+        cipher(sub[1],rotation[1])
+      elsif sub[2]
+        cipher(sub[2],rotation[2])
+      else 
+        cipher(sub[3],rotation[3])
+      end
+    end
+  end
 end
