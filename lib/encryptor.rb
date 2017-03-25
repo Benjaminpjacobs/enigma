@@ -1,9 +1,12 @@
 require './lib/key_gen'
 require './lib/offset_gen'
-
 require 'pry'
+
 class Encryptor
   attr_accessor :message, :key, :date
+
+  CIPHER_BASE = ("0".."z").to_a.push('!', "#", "$", "%", "&","*", "(", ")", ".", "/", "|", ",", " ")
+  
 
   def initialize(message, key = nil, date = nil)
     @message = message
@@ -33,8 +36,7 @@ class Encryptor
   end
   
   def cipher(key, value)
-    cipher_base = ("0".."z").to_a
-    cipher_array = cipher_base.zip(cipher_base.rotate(key))
+    cipher_array = CIPHER_BASE.zip(CIPHER_BASE.rotate(key))
     cipher_hash(cipher_array, value)
   end
 
@@ -46,15 +48,34 @@ class Encryptor
     cipher_hash[value]
   end
 
-  def encrypt
+  def encrypt(mode)
     rotation = rotation_and_offset
     parse
-    split_into_sub_arrays.map! do |sub, idx|
-      cipher_sub_array(sub, rotation)
+    split_into_sub_arrays.map! do |sub|
+      cipher_sub_array(sub, rotation, mode)
+    end.join
+  end
+
+  def cipher_sub_array(array, rotation, mode)
+    array.map!.with_index do |letter, index|
+      case index
+      when 0
+        check_mode(rotation[0], letter, mode)
+      when 1
+        check_mode(rotation[1], letter, mode)
+      when 2
+        check_mode(rotation[2], letter, mode)
+      else
+        check_mode(rotation[3], letter, mode)
+      end
+    end
+  end 
+  def check_mode(rotation, letter, mode)
+    if mode == "encrypt"
+      cipher(rotation, letter)
+    else
+      cipher(-rotation, letter)
     end
   end
 
-  def cipher_sub_array(array, rotation)
-    
-  end
 end

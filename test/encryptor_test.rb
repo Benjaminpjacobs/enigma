@@ -57,14 +57,41 @@ class EncryptorTest < Minitest::Test
   end
   def test_cipher_letter
     enigma = Encryptor.new("hello")
-    actual = enigma.cipher(1, "A")
-    assert_equal "B", actual
+    actual = enigma.cipher(10, "A")
+    assert_equal "K", actual
+  end
+  def test_cipher_letter
+    enigma = Encryptor.new("hello")
+    actual = enigma.cipher(10, "0")
+    assert_equal ":", actual
+  end
+  def test_cipher_letter
+    enigma = Encryptor.new("hello")
+    actual = enigma.cipher(10, "?")
+    assert_equal "I", actual
   end
   def test_small_encryption
-    enigma = Encryptor.new("hell", 10102)
-    actual = enigma.encrypt
-    expected = "rjdw"
+    enigma = Encryptor.new("hell", 10102, Date.new(2017, 3, 24))
+    actual = enigma.encrypt("encrypt")
+    expected = "rj%w"
     assert_equal expected, actual
   end
-
+  def test_small_decryption
+    enigma = Encryptor.new("rj%w", 10102, Date.new(2017, 3, 24))
+    actual = enigma.encrypt("decrypt")
+    expected = "hell"
+    assert_equal expected, actual
+  end
+  def test_encryption_with_space
+    enigma = Encryptor.new("hello, there", 10102, Date.new(2017, 3, 24))
+    actual = enigma.encrypt("encrypt")
+    expected = "rj%wy3A&rj/p"
+    assert_equal expected, actual
+  end
+  def test_decryption_with_space
+    enigma = Encryptor.new("rj%wy3A&rj/p", 10102, Date.new(2017, 3, 24))
+    actual = enigma.encrypt("decrypt")
+    expected = "hello, there"
+    assert_equal expected, actual
+  end
 end
