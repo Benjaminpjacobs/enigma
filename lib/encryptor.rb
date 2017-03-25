@@ -60,17 +60,18 @@ class Encryptor
     array.map!.with_index do |letter, index|
       case index
       when 0
-        check_mode(rotation[0], letter, mode)
+        encrypt_or_decrypt(rotation[0], letter, mode)
       when 1
-        check_mode(rotation[1], letter, mode)
+        encrypt_or_decrypt(rotation[1], letter, mode)
       when 2
-        check_mode(rotation[2], letter, mode)
+        encrypt_or_decrypt(rotation[2], letter, mode)
       else
-        check_mode(rotation[3], letter, mode)
+        encrypt_or_decrypt(rotation[3], letter, mode)
       end
     end
   end 
-  def check_mode(rotation, letter, mode)
+
+  def encrypt_or_decrypt(rotation, letter, mode)
     if mode == "encrypt"
       cipher(rotation, letter)
     else
