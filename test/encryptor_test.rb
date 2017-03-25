@@ -19,17 +19,11 @@ class EncryptorTest < Minitest::Test
     assert_equal Date.today, enigma.date
   end
 
-  def test_it_can_parse_message_into_array
+  def test_it_can_interact_with_message_class
     enigma = Encryptor.new("hello, there")
-    expected = ['h','e','l','l','o',',',' ', 't', 'h','e', 'r', 'e']
-    assert_equal expected, enigma.parse
-  end
-
-  def test_it_can_split_message_into_sub_arrays
-    enigma = Encryptor.new("hello, there")
-    enigma.parse
+    enigma.parse_and_split
     expected = [["h", "e", "l", "l"], ["o", ",", " ", "t"], ["h", "e", "r", "e"]]
-    assert_equal expected, enigma.split_into_sub_arrays
+    assert_equal expected, enigma.parse_and_split
   end
 
   def test_it_can_generate_rotation

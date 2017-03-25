@@ -1,5 +1,6 @@
 require './lib/key_gen'
 require './lib/offset_gen'
+require './lib/message_io'
 require 'pry'
 
 class Encryptor
@@ -14,16 +15,19 @@ class Encryptor
     @date = date
   end
   
-  def parse
-    @message = message.split('')
-  end
-  
-  def split_into_sub_arrays
-    @message = message.each_slice(4).to_a
+  def parse_and_split
+    message = MessageIO.new(@message)
+    message.parse
+    message.split_into_sub_arrays
   end
 
   def key_into_rotation
-    key.nil? ? KeyGen.new.generate : KeyGen.new.convert_key(key)
+    if key.nil?
+      @key = KeyGen.new.generate
+    else
+       @key = KeyGen.new.convert_key(key)
+    end
+    @key
   end
   
   def date_into_offset
@@ -50,10 +54,10 @@ class Encryptor
 
   def encrypt(mode)
     rotation = rotation_and_offset
-    parse
-    split_into_sub_arrays.map! do |sub|
+    parse_and_split.map! do |sub|
       cipher_sub_array(sub, rotation, mode)
     end.join
+    # p "message was encrypted with key #{@key}. Encrypted message: #{encrypted_message}"
   end
 
   def cipher_sub_array(array, rotation, mode)

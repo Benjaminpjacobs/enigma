@@ -1,7 +1,7 @@
 require 'pry'
 require './lib/encryptor'
 
-class Message
+class MessageIO
 
   def initialize(message="")
     @message = message
