@@ -61,9 +61,9 @@ class EncryptorTest < Minitest::Test
     assert_equal "B", actual
   end
   def test_small_encryption
-    enigma = Encryptor.new("hello", 10102)
+    enigma = Encryptor.new("hell", 10102)
     actual = enigma.encrypt
-    expected = "rjdwy"
+    expected = "rjdw"
     assert_equal expected, actual
   end
 
