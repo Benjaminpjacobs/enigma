@@ -11,14 +11,25 @@ class EnigmaTest < Minitest::Test
     assert_instance_of Enigma, Enigma.new
   end
 
-  def test_it_can_encrypt_a_message
+  def test_integration_of_runner_class
     e = Enigma.new
     my_message = "this is so secret ..end.."
-    output = e.encrypt(my_message)
-    assert_equal my_message.length, output.length
+    assert_equal 82, e.encrypt(my_message).length
   end
-  # def
-  #   expected = "Eq|UXr7iDxKU6l6GE8Ge6w*eT"
-  # end
+  def test_integration_encrypt_with_key_and_date
+    e = Enigma.new
+    my_message = "this is so secret ..end.."
+    expected = "message was encrypted with key 12345. Encrypted message: *.;Q;/Ee&2YQq%DC*JUaq16a7"
+    actual = e.encrypt(my_message, 12345, Date.new(2017,03,25))
+    assert_equal expected, actual
+  end
+  def test_integration_decrypt_with_key_and_date
+    e = Enigma.new
+    expected = "this is so secret ..end.."
+    my_message = "*.;Q;/Ee&2YQq%DC*JUaq16a7"
+    actual = e.decrypt(my_message, 12345, Date.new(2017,03,25))
+    assert_equal actual, expected
+    
+  end
 end
 

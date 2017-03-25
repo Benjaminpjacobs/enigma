@@ -11,7 +11,7 @@ class KeyGen
   end
 
   def generate_original
-    @key = "%05d" % Random.rand(99999) 
+    @key = "%05d" % Random.rand(10000..99999) 
   end
 
   def convert_key(number)

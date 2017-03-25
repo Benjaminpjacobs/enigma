@@ -16,13 +16,16 @@ class Enigma
 
   def encrypt(message=@message, key=@key, date=Date.today)
     encrypt = Encryptor.new(message, key, date)
-    encrypt.parse_and_split
-    output = encrypt.encrypt(encrypt)
-    binding.pry
+    output = encrypt.encrypt("encrypt")
+    # binding.pry
+    p "message was encrypted with key #{encrypt.key}. Encrypted message: #{output}"
   end
 
   def decrypt(message=@message, key=@key, date=Date.today)
-    
+    binding.pry
+    decrypt = Encryptor.new(message, key, date)
+    binding.pry
+    decrypt.encrypt("decrypt")
   end
 
   def crack(message=@message, date=Date.today)

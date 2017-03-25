@@ -23,11 +23,12 @@ class Encryptor
 
   def key_into_rotation
     if key.nil?
-      @key = KeyGen.new.generate
+      @key = KeyGen.new.generate_original
+      offset_key = KeyGen.new.convert_key(key)
     else
-       @key = KeyGen.new.convert_key(key)
+      offset_key = KeyGen.new.convert_key(key)
     end
-    @key
+    offset_key
   end
   
   def date_into_offset
@@ -57,7 +58,6 @@ class Encryptor
     parse_and_split.map! do |sub|
       cipher_sub_array(sub, rotation, mode)
     end.join
-    # p "message was encrypted with key #{@key}. Encrypted message: #{encrypted_message}"
   end
 
   def cipher_sub_array(array, rotation, mode)
