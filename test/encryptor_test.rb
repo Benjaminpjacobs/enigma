@@ -1,11 +1,7 @@
-require 'simplecov'
-SimpleCov.start
-
-gem "minitest"
-require "minitest/autorun"
-require "minitest/pride"
+require './test/test_helper.rb'
 require "./lib/encryptor"
 require 'pry'
+
 class EncryptorTest < Minitest::Test
 
   def test_it_exists
@@ -77,28 +73,28 @@ class EncryptorTest < Minitest::Test
 
   def test_small_encryption
     enigma = Encryptor.new("hell", 10102, Date.new(2017, 3, 24))
-    actual = enigma.encrypt("encrypt")
+    actual = enigma.crypt("encrypt")
     expected = "rj%w"
     assert_equal expected, actual
   end
 
   def test_small_decryption
     enigma = Encryptor.new("rj%w", 10102, Date.new(2017, 3, 24))
-    actual = enigma.encrypt("decrypt")
+    actual = enigma.crypt("decrypt")
     expected = "hell"
     assert_equal expected, actual
   end
 
   def test_encryption_with_space
     enigma = Encryptor.new("hello, there", 10102, Date.new(2017, 3, 24))
-    actual = enigma.encrypt("encrypt")
+    actual = enigma.crypt("encrypt")
     expected = "rj%wy3A&rj/p"
     assert_equal expected, actual
   end
   
   def test_decryption_with_space
     enigma = Encryptor.new("rj%wy3A&rj/p", 10102, Date.new(2017, 3, 24))
-    actual = enigma.encrypt("decrypt")
+    actual = enigma.crypt("decrypt")
     expected = "hello, there"
     assert_equal expected, actual
   end

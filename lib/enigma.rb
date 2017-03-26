@@ -10,25 +10,21 @@ class Enigma
     @output = output
     @key = key
     @date = date
-    # binding.pry
-    
   end
 
   def encrypt(message=@message, key=@key, date=Date.today)
-    encrypt = Encryptor.new(message, key, date)
-    output = encrypt.encrypt("encrypt")
-    # binding.pry
-    p "message was encrypted with key #{encrypt.key}. Encrypted message: #{output}"
+    e = Encryptor.new(message, key, date)
+    output = e.crypt("encrypt")
+    p "message was encrypted with key #{e.key}. Encrypted message: #{output}"
   end
 
   def decrypt(message=@message, key=@key, date=Date.today)
-    binding.pry
-    decrypt = Encryptor.new(message, key, date)
-    binding.pry
-    decrypt.encrypt("decrypt")
+    e = Encryptor.new(message, key, date)
+    e.crypt("decrypt")
   end
 
   def crack(message=@message, date=Date.today)
     
   end
 end
+

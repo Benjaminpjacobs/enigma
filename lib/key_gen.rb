@@ -1,22 +1,22 @@
 class KeyGen
   attr_reader :key
-  def initialize
-    @key = 0
+  def initialize(key=0)
+    @key = key
   end
   
   def generate
-    key = generate_original  
-    key = key_into_array(key)
-    key = output_rotations(key)
+    generate_original  
+    divided_key = key_into_array(@key)
+    rotations = output_rotations(divided_key)
   end
 
   def generate_original
     @key = "%05d" % Random.rand(10000..99999) 
   end
 
-  def convert_key(number)
-    key = key_into_array(number)
-    key = output_rotations(key)
+  def convert_key(incoming_key)
+    divided_key = key_into_array(incoming_key)
+    rotations = output_rotations(divided_key)
   end
   
   def key_into_array(numbers=@key)
@@ -24,15 +24,16 @@ class KeyGen
     numbers.map {|num| num.to_i}
   end
   
-  def output_rotations(numbers=[])
+  def output_rotations(divided_key)
     rotations = []
-    first_num = 0
-    while numbers.size > 1 do
-      first_num = numbers.shift
-      result = first_num.to_s + numbers.first.to_s
-      rotations << result.to_i
+    while divided_key.size > 1 do
+      rotations << (divided_key.shift.to_s + divided_key.first.to_s).to_i
     end
     rotations
   end
-  
+
+  def next_key
+    @key += 1
+    convert_key(@key)
+  end
 end

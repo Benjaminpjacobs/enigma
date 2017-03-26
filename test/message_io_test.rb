@@ -1,11 +1,7 @@
-require 'simplecov'
-SimpleCov.start
-
-gem "minitest"
-require "minitest/autorun"
-require "minitest/pride"
+require './test/test_helper.rb'
 require "./lib/message_io"
 require 'pry'
+
 class MessageIOTest < Minitest::Test
   def test_instance_of_message_class
     message = MessageIO.new

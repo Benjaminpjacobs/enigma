@@ -1,8 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-
-require 'minitest'
-require 'minitest/autorun'
+require './test/test_helper.rb'
 require './lib/key_gen'
 
 class KeyGenTest < Minitest::Test
@@ -50,5 +46,11 @@ class KeyGenTest < Minitest::Test
   def test_generate_new
     key_gen = KeyGen.new
     assert_equal 4, key_gen.generate.length
+  end
+  def test_next_key
+    key_gen = KeyGen.new(12346)
+    expected = [12, 23, 34, 47]
+    actual = key_gen.next_key
+    assert_equal expected, actual
   end
 end

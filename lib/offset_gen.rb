@@ -7,8 +7,11 @@ class OffsetGen
   end
   
   def convert_into_offset
-    date_square = ((date.strftime("%d%m%y").to_i) ** 2).to_s[-4..-1]
+    date_square = ((@date.strftime("%d%m%y").to_i) ** 2).to_s[-4..-1]
     date_square.split('').map!{|number| number.to_i} 
   end
   
+  def previous_date
+    @date = @date.prev_day
+  end
 end

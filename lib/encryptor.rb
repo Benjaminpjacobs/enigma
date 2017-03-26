@@ -9,10 +9,12 @@ class Encryptor
   CIPHER_BASE = ("0".."z").to_a.push('!', "#", "$", "%", "&","*", "(", ")", ".", "/", "|", ",", " ")
   
 
-  def initialize(message, key = nil, date = nil)
+  def initialize(message, key = nil, date = nil, output=nil, mode =nil)
     @message = message
     @key = key
     @date = date
+    @output = output
+    @mode = nil
   end
   
   def parse_and_split
@@ -53,8 +55,7 @@ class Encryptor
     cipher_hash[value]
   end
 
-  def encrypt(mode)
-    rotation = rotation_and_offset
+  def crypt(mode, rotation=rotation_and_offset)
     parse_and_split.map! do |sub|
       cipher_sub_array(sub, rotation, mode)
     end.join
@@ -82,5 +83,4 @@ class Encryptor
       cipher(-rotation, letter)
     end
   end
-
 end

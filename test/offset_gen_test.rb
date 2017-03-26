@@ -1,8 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-
-require 'minitest'
-require 'minitest/autorun'
+require './test/test_helper.rb'
 require './lib/offset_gen'
 
 class OffsetTest < Minitest::Test
@@ -29,6 +25,14 @@ class OffsetTest < Minitest::Test
     date = Date.new(2001, 2, 13)
     generator = OffsetGen.new(date)
     expected = [0, 4, 0, 1]
+    assert_equal expected, generator.convert_into_offset
+  end
+  
+  def test_previous_date
+    date = Date.new(2001, 2, 1)
+    generator = OffsetGen.new(date)
+    expected = [0,2,0,1]
+    generator.previous_date
     assert_equal expected, generator.convert_into_offset
   end
 end
