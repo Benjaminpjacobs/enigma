@@ -2,6 +2,7 @@ require "./lib/encryptor"
 require "./lib/key_gen.rb"
 require "./lib/offset_gen.rb"
 require "./lib/message_io"
+require "./lib/crack"
 require 'pry'
 
 class Enigma
@@ -24,7 +25,8 @@ class Enigma
   end
 
   def crack(message=@message, date=Date.today)
-    
+    c = Crack.new(message)
+    c.decrypt
   end
 end
 

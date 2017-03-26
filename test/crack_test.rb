@@ -57,10 +57,10 @@ class CrackTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def decrypt
+  def test_decrypt
     c = Crack.new("7F7LpFU")
     expected = "..end.."
     actual = c.decrypt
     assert_equal expected, actual
-  end
+    end
 end

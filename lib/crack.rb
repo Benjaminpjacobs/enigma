@@ -56,16 +56,15 @@ class Crack
   def find_rotations
     a = find_character_indexes
     b = comparison_index
-    binding.pry
     a.zip(b).map! do |index|
       (index[0] + 88) - index[1]
     end
   end
 
   def decrypt
-    rotation = find_rotaions
+    rotation = find_rotations
     e = Encryptor.new(message)
-    e.crypt(decrypt,rotation)
+    e.crypt("decrypt", rotation)
   end
 
 end

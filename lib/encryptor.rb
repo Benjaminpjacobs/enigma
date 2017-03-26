@@ -55,7 +55,8 @@ class Encryptor
     cipher_hash[value]
   end
 
-  def crypt(mode, rotation=rotation_and_offset)
+  def crypt(mode, rotation=nil)
+    rotation = rotation_and_offset if rotation.nil?
     parse_and_split.map! do |sub|
       cipher_sub_array(sub, rotation, mode)
     end.join
