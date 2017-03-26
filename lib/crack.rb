@@ -1,15 +1,12 @@
 require "./lib/message_io"
-# require "./lib/key_gen"
-# require "./lib/off_set"
-# require "./lib/encryptor"
-require 'pry'
+require "./lib/cryptor"
+require "./lib/enigma_module"
 
 class Crack
   attr_reader :message, :key, :date
-  CIPHER_BASE = ("0".."z").to_a.push('!', "#", "$", "%", "&",                                   "*", "(", ")", ".", "/",                                   "|", ",", " ")
 
-  CRACK_INDEXES = {'e' => 53, "n" => 62, 
-                   'd' => 52, '.' => 83}
+  CI = {'e' => 4, "n" => 13, 
+        'd' => 3, '.' => 37}
 
   def initialize(message=nil, *key_date)
     @message = message
@@ -37,19 +34,19 @@ class Crack
   def comparison_index
     case parse_and_split[-1].length
     when 4
-      [62, 52, 83, 83]
+      [CI["n"], CI["d"], CI["."], CI["."]]
     when 3
-      [83, 83, 53, 62]
+      [CI["."], CI["."], CI["e"], CI["n"]]
     when 2
-      [83, 53, 62, 52]
+      [CI["."], CI["e"], CI["n"], CI["d"]]
     when 1
-      [53, 62, 52, 83]
+      [CI["e"], CI["n"], CI["d"], CI["."]]
     end
   end
   
   def find_character_indexes
     last_group_of_four.map do |character|
-      CIPHER_BASE.index(character)
+      Cipher::CIPHER.index(character)
     end
   end
 
@@ -57,13 +54,13 @@ class Crack
     a = find_character_indexes
     b = comparison_index
     a.zip(b).map! do |index|
-      (index[0] + 88) - index[1]
+      (index[0]) - index[1]
     end
   end
 
   def decrypt
     rotation = find_rotations
-    e = Encryptor.new(message)
+    e = Cryptor.new(message)
     e.crypt("decrypt", rotation)
   end
 

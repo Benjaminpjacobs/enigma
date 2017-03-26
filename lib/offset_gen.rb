@@ -1,5 +1,3 @@
-require 'pry'
-
 class OffsetGen
   attr_accessor :date
   def initialize(date=Date.today)

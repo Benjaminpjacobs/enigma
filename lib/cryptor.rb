@@ -1,13 +1,10 @@
 require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
-require 'pry'
+require './lib/enigma_module'
 
-class Encryptor
+class Cryptor
   attr_accessor :message, :key, :date
-
-  CIPHER_BASE = ("0".."z").to_a.push('!', "#", "$", "%", "&","*", "(", ")", ".", "/", "|", ",", " ")
-  
 
   def initialize(message, key = nil, date = nil, output=nil, mode =nil)
     @message = message
@@ -43,7 +40,7 @@ class Encryptor
   end
   
   def cipher(key, value)
-    cipher_array = CIPHER_BASE.zip(CIPHER_BASE.rotate(key))
+    cipher_array = Cipher::CIPHER.zip(Cipher::CIPHER.rotate(key))
     cipher_hash(cipher_array, value)
   end
 

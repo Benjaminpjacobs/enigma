@@ -1,5 +1,4 @@
-require 'pry'
-require './lib/encryptor'
+require './lib/cryptor'
 
 class MessageIO
 
