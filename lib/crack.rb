@@ -49,6 +49,8 @@ class Crack
       [CI["e"], CI["n"], CI["d"], CI["."]]
     end
   end
+
+  ### turn into hash table ^
   
   def find_character_indexes
     last_group_of_four.map do |character|
@@ -122,9 +124,3 @@ class Crack
   end
   
 end
-
-####################################
-# c = Crack.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
-# c.parse_file
-# c.crack
-# c.write_to_file
