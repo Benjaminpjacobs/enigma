@@ -1,7 +1,9 @@
 require "./test/test_helper.rb"
 require "./lib/crack.rb"
 
+
 class CrackTest < Minitest::Test
+
   def test_it_exists
     assert_instance_of Crack, Crack.new
   end
@@ -16,6 +18,10 @@ class CrackTest < Minitest::Test
     c = Crack.new("hello", 12345, Date.today)
     assert_equal 12345, c.key
     assert_equal Date.today, c.date
+    c = Crack.new("hello.txt", "output.txt", 12345, Date.today)
+    assert_equal 12345, c.key
+    assert_equal Date.today, c.date
+    assert_equal "output.txt", c.output
   end
 
   def test_it_can_find_last_group_of_four
@@ -85,4 +91,29 @@ class CrackTest < Minitest::Test
     actual = c.crack
     assert_equal expected, actual
   end
+  
+  def test_it_can_read_message_file
+    c = Crack.new("./test/encrypted_message.txt", "./test/decrypted_file.txt")
+    c.read_file
+    expected = "58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK"
+    assert_equal expected, c.message
+  end
+
+  def test_it_can_crack_message_file
+    c = Crack.new("./test/encrypted_message.txt", "./test/decrypted_message.txt")
+    c.read_file
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-26"
+    assert_equal expected, c.crack
+  end
+  
+  def test_it_can_write_cracked_file
+    c = Crack.new("./test/encrypted_message.txt", "./test/decrypted_message.txt")
+    c.write_decrypted_file
+    decrypted_file = "./test/decrypted_message.txt"
+    actual = File.readlines(decrypted_file).join
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-26"
+    binding.pry
+    assert_equal expected, actual
+  end
+  
 end
