@@ -16,6 +16,10 @@ class CrackTest < Minitest::Test
     c = Crack.new("hello", 12345, Date.today)
     assert_equal 12345, c.key
     assert_equal Date.today, c.date
+    c = Crack.new("hello.txt", "output.txt", 12345, Date.today)
+    assert_equal 12345, c.key
+    assert_equal Date.today, c.date
+    assert_equal "output.txt", c.output
   end
 
   def test_it_can_find_last_group_of_four

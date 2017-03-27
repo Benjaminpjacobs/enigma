@@ -4,20 +4,26 @@ require "./lib/enigma_module"
 require 'pry'
 
 class Crack
-  attr_reader :message, :key, :date
+  attr_reader :message, :output, :key, :date
 
   CI = {'e' => 4, "n" => 13, 
         'd' => 3, '.' => 37}
 
-  def initialize(message=nil, *key_date)
+  def initialize(message=nil, *argument)
     @message = message
-    if key_date[1]
-      @key = key_date[0]
-      @date = key_date[1]
-    elsif key_date[0].is_a?(Fixnum)
-      @key = key_date[0]
-    elsif key_date[0].is_a?(Date)
-      @date = key_date[0]
+    if argument[0] && argument[1] && argument[2]
+      @output = argument[0]
+      @key = argument[1]
+      @date = argument[2]
+    elsif argument[0]  && argument[1]
+      @key = argument[0]
+      @date = argument[1]
+    elsif argument[0].is_a?(Fixnum)
+      @key = argument[0]
+    elsif argument[0].is_a?(Date)
+      @date = argument[0]
+    elsif argument[0].is_a?(String)
+      @output = argument[0]
     end
   end
 
@@ -106,3 +112,9 @@ class Crack
     (num[0] + num[1] + num[3] + num[5] + num[7])    
   end
 end
+
+####################################
+# c = Crack.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
+# c.parse_file
+# c.crack
+# c.write_to_file
