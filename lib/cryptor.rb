@@ -75,9 +75,9 @@ class Cryptor
   end 
 
   def encrypt_or_decrypt(rotation, letter, mode)
-    if mode == "encrypt"
+    if mode == :ENCRYPT
       cipher(rotation, letter)
-    else
+    elsif mode == :DECRYPT
       cipher(-rotation, letter)
     end
   end

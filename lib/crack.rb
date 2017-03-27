@@ -78,7 +78,7 @@ class Crack
   def decrypt
     @rotation = find_rotations
     e = Cryptor.new(message)
-    e.crypt("decrypt", @rotation)
+    e.crypt(:DECRYPT, @rotation)
   end
 
   def crack_key_and_date(rotation)
