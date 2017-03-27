@@ -31,7 +31,12 @@ class Cryptor
   end
   
   def date_into_offset
-    date.nil? ? OffsetGen.new.convert_into_offset : OffsetGen.new(date).convert_into_offset
+    if date.nil?
+      @date = Date.today
+      OffsetGen.new.convert_into_offset 
+    else
+      OffsetGen.new(date).convert_into_offset
+    end
   end
 
   def rotation_and_offset
