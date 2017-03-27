@@ -18,8 +18,8 @@ class MessageIO
     @message = @message.each_slice(4).to_a
   end
   
-  def write_file(file_name)
-    File.write(file_name, @message)
+  def write_file(file_name, message = @message)
+    File.write(file_name, message)
   end
 
   

@@ -111,6 +111,16 @@ class Crack
   def regenerate(num)
     (num[0] + num[1] + num[3] + num[5] + num[7])    
   end
+
+  def read_file
+    @message = MessageIO.new(@message).read_file
+  end
+  
+  def write_decrypted_file
+    read_file
+    MessageIO.new.write_file(@output, crack)
+  end
+  
 end
 
 ####################################
