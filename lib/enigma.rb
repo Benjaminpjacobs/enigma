@@ -1,34 +1,25 @@
-require "./lib/encryptor"
-require "./lib/key_gen.rb"
-require "./lib/offset_gen.rb"
+require "./lib/cryptor"
+require "./lib/key_gen"
+require "./lib/offset_gen"
 require "./lib/message_io"
-require 'pry'
+require "./lib/crack"
 
 class Enigma
-  def initialize(input=ARGV[0], output=ARGV[1], key=ARGV[2], date=ARGV[3])
-    @input = input
-    @output = output
-    @key = key
-    @date = date
-    # binding.pry
-    
-  end
 
   def encrypt(message=@message, key=@key, date=Date.today)
-    encrypt = Encryptor.new(message, key, date)
-    output = encrypt.encrypt("encrypt")
-    # binding.pry
-    p "message was encrypted with key #{encrypt.key}. Encrypted message: #{output}"
+    e = Cryptor.new(message, key, date)
+    output = e.crypt("encrypt")
+    p "message was encrypted with key #{e.key}. Encrypted message: #{output}"
   end
 
   def decrypt(message=@message, key=@key, date=Date.today)
-    binding.pry
-    decrypt = Encryptor.new(message, key, date)
-    binding.pry
-    decrypt.encrypt("decrypt")
+    e = Cryptor.new(message, key, date)
+    e.crypt("decrypt")
   end
 
   def crack(message=@message, date=Date.today)
-    
+    c = Crack.new(message)
+    c.decrypt
   end
 end
+

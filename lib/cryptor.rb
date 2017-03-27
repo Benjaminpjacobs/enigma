@@ -1,18 +1,17 @@
 require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
-require 'pry'
+require './lib/enigma_module'
 
-class Encryptor
+class Cryptor
   attr_accessor :message, :key, :date
 
-  CIPHER_BASE = ("0".."z").to_a.push('!', "#", "$", "%", "&","*", "(", ")", ".", "/", "|", ",", " ")
-  
-
-  def initialize(message, key = nil, date = nil)
+  def initialize(message, key = nil, date = nil, output=nil, mode =nil)
     @message = message
     @key = key
     @date = date
+    @output = output
+    @mode = nil
   end
   
   def parse_and_split
@@ -41,7 +40,7 @@ class Encryptor
   end
   
   def cipher(key, value)
-    cipher_array = CIPHER_BASE.zip(CIPHER_BASE.rotate(key))
+    cipher_array = Cipher::CIPHER.zip(Cipher::CIPHER.rotate(key))
     cipher_hash(cipher_array, value)
   end
 
@@ -53,8 +52,8 @@ class Encryptor
     cipher_hash[value]
   end
 
-  def encrypt(mode)
-    rotation = rotation_and_offset
+  def crypt(mode, rotation=nil)
+    rotation = rotation_and_offset if rotation.nil?
     parse_and_split.map! do |sub|
       cipher_sub_array(sub, rotation, mode)
     end.join
@@ -82,5 +81,4 @@ class Encryptor
       cipher(-rotation, letter)
     end
   end
-
 end
