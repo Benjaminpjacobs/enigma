@@ -71,4 +71,18 @@ class CrackTest < Minitest::Test
     actual = c.decrypt
     assert_equal expected, actual
   end
+
+  def test_crack_key_and_dates
+    c = Crack.new
+    actual = c.crack_key_and_date([14, 25, 39, 51])
+    expected = "cracked with key: 12345 and date 2016-10-31"
+    assert_equal expected, actual
+  end
+
+  def test_decrypt_and_crack_key_and_date
+    c = Crack.new("58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK")
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-26"
+    actual = c.crack
+    assert_equal expected, actual
+  end
 end

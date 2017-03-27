@@ -1,6 +1,7 @@
 require "./lib/message_io"
 require "./lib/cryptor"
 require "./lib/enigma_module"
+require 'pry'
 
 class Crack
   attr_reader :message, :key, :date
@@ -24,7 +25,6 @@ class Crack
     m = MessageIO.new(@message)
     m.parse
     m.split_into_sub_arrays
-    
   end
 
   def last_group_of_four
@@ -53,15 +53,56 @@ class Crack
   def find_rotations
     a = find_character_indexes
     b = comparison_index
-    a.zip(b).map! do |index|
+    rotation = a.zip(b).map! do |index|
       (index[0]) - index[1]
+    end
+    positive_rotations(rotation)
+  end
+
+  def positive_rotations(rotation)
+    rotation.map! do |number|
+      if number < 0 
+        number + Cipher::CIPHER.length 
+      else
+        number
+      end
     end
   end
 
-  def decrypt
-    rotation = find_rotations
-    e = Cryptor.new(message)
-    e.crypt("decrypt", rotation)
+  def crack
+    message = decrypt
+    key_and_date = crack_key_and_date(@rotation)
+    p "message: '#{message}', #{key_and_date}"
   end
 
+  def decrypt
+    @rotation = find_rotations
+    e = Cryptor.new(message)
+    e.crypt("decrypt", @rotation)
+  end
+
+  def crack_key_and_date(rotation)
+    date = OffsetGen.new
+    date.previous_date
+    offset = date.convert_into_offset
+    potential_key = generate_potential_key(rotation, offset)
+    until check_pattern(potential_key[1..6])
+      date.previous_date
+      offset = date.convert_into_offset
+      potential_key = generate_potential_key(rotation, offset)
+    end
+      p "cracked with key: #{regenerate(potential_key)} and date #{date.date}"
+  end
+
+  def generate_potential_key(rotation, offset)
+    rotation.zip(offset).map{ |numbers| numbers[0] - numbers[1] }.map{ |number| number.to_s.split('') }.flatten
+  end
+
+  def check_pattern(array)
+    array[0] == array[1] && array[2] == array[3] && array[4] == array[5]
+  end
+
+  def regenerate(num)
+    (num[0] + num[1] + num[3] + num[5] + num[7])    
+  end
 end
