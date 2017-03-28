@@ -5,14 +5,6 @@ require './lib/enigma_module'
 
 class Cryptor
   attr_accessor :message, :key, :date
-
-  def initialize(message, key = nil, date = nil, output=nil, mode =nil)
-    @message = message
-    @key = key
-    @date = date
-    @output = output
-    @mode = nil
-  end
   
   def parse_and_split
     message = MessageIO.new(@message)
@@ -57,30 +49,21 @@ class Cryptor
     cipher_hash[value]
   end
 
-  def crypt(mode, rotation=nil)
-    rotation = rotation_and_offset if rotation.nil?
+  def run_the_cipher(rotation)
     parse_and_split.map! do |sub|
-      cipher_sub_array(sub, rotation, mode)
+      cipher_sub_array(sub, rotation)
     end.join
   end
 
-  def cipher_sub_array(array, rotation, mode)
+  def cipher_sub_array(array, rotation)
     array.map!.with_index do |letter, index|
-      cipher_sub_array = { 0 => encrypt_or_decrypt(rotation[0], letter, mode),
-                           1 => encrypt_or_decrypt(rotation[1], letter, mode),
-                           2 => encrypt_or_decrypt(rotation[2], letter, mode),
-                           3 => encrypt_or_decrypt(rotation[3], letter, mode),
+      cipher_sub_array = { 0 => cipher(rotation[0], letter),
+                           1 => cipher(rotation[1], letter),
+                           2 => cipher(rotation[2], letter),
+                           3 => cipher(rotation[3], letter),
                           }
       cipher_sub_array[index]
     end
   end 
-
-
-  def encrypt_or_decrypt(rotation, letter, mode)
-    if mode == :ENCRYPT
-      cipher(rotation, letter)
-    elsif mode == :DECRYPT
-      cipher(-rotation, letter)
-    end
-  end
 end
+
