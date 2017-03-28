@@ -1,7 +1,6 @@
 require "./lib/message_io"
 require "./lib/cryptor"
 require "./lib/enigma_module"
-
 class Crack < Cryptor
   attr_reader :message, :output, :key, :date
 
@@ -23,7 +22,7 @@ class Crack < Cryptor
       @key = argument[1]
       @date = argument[2]
     elsif argument[0]  && argument[1]
-      @key = argument[0]
+      @output = argument[0]
       @date = argument[1]
     elsif argument[0].is_a?(Fixnum)
       @key = argument[0]
@@ -75,40 +74,31 @@ class Crack < Cryptor
   end
 
   def crack
+    messenger = MessageIO.new(@message)
+    if @message.end_with?(".txt")
+      @message= messenger.read_file
+    end
     message = decrypt
-    key_and_date = crack_key_and_date(@rotation.map{|num| num * -1})
-    p "message: '#{message}', #{key_and_date}"
+    unless @output.nil?
+      messenger.write_file(@output, message)
+      p "Created #{@output} with key of #{key_from_date} and date #{date}"
+    else 
+      p "message: '#{message}', cracked with #{key_from_date} and #{date}"
+    end
   end
 
   def decrypt
     @rotation = find_rotations
-    run_the_cipher(@rotation.map!{ |num| num * -1 })
+    run_the_cipher(@rotation.map{ |num| num * -1 })
   end
 
-  def crack_key_and_date(rotation)
-    date = OffsetGen.new
-    date.previous_date
-    offset = date.convert_into_offset
-    potential_key = generate_potential_key(rotation, offset)
-
-    until pattern_cracked?(potential_key[1..6])
-      date.previous_date
-      offset = date.convert_into_offset
-      potential_key = generate_potential_key(rotation, offset)
-    end
-      p "cracked with key: #{regenerate(potential_key)} and date #{date.date}"
-  end
-
-  def generate_potential_key(rotation, offset)
-    rotation.zip(offset).map {|numbers|
-      numbers[0] - numbers[1]
-    }.map{ |number| number.to_s.split('') }.flatten
-  end
-
-  def pattern_cracked?(array)
-    array[0] == array[1] and
-    array[2] == array[3] and
-    array[4] == array[5]
+  def key_from_date(rotation=@rotation, date=Date.today)
+      offset = OffsetGen.new(date)
+      offset = offset.convert_into_offset
+      split_key = rotation.zip(offset).map! do |sub|
+        (sub[0] - sub[1])
+      end
+      regenerate(split_key.join.split(''))
   end
 
   def regenerate(num)
@@ -124,3 +114,7 @@ class Crack < Cryptor
     MessageIO.new.write_file(@output, crack)
   end
 end
+
+######################################
+# c = Crack.new(ARGV[0], ARGV[1], ARGV[2])
+# c.crack

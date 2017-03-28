@@ -12,18 +12,10 @@ class CrackTest < Minitest::Test
     a = Crack.new("hello")
     assert_equal "hello", a.message
 
-    b = Crack.new("hello", 12345)
-    assert_equal 12345, b.key
-
-    c = Crack.new("hello", Date.today)
-    assert_equal Date.today, c.date
-
-    d = Crack.new("hello", 12345, Date.today)
-    assert_equal 12345, d.key
+    d = Crack.new("hello", Date.today)
     assert_equal Date.today, d.date
 
-    e = Crack.new("hello.txt", "output.txt", 12345, Date.today)
-    assert_equal 12345, e.key
+    e = Crack.new("hello.txt", "output.txt", Date.today)
     assert_equal Date.today, e.date
     assert_equal "output.txt", e.output
   end
@@ -64,55 +56,46 @@ class CrackTest < Minitest::Test
     assert_equal "..end..", c.decrypt
   end
 
-  # def test_decrypt_longer
-  #   c = Crack.new("58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK")
-  #   expected = "this is a much longer message so hopefully this wokrs ..end.."
-  #   assert_equal expected, c.decrypt
-  # end
+  def test_decrypt_longer
+    c = Crack.new("58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK")
+    expected = "this is a much longer message so hopefully this wokrs ..end.."
+    assert_equal expected, c.decrypt
+  end
 
-  # def test_crack_key_and_dates
-  #   c = Crack.new
-  #   actual = c.crack_key_and_date([14, 25, 39, 51])
-  #   expected = "cracked with key: 12345 and date 311016"
-  #   assert_equal expected, actual
-  # end
-
-  # def test_decrypt_and_crack_key_and_date
-  #   c = Crack.new("58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK")
-  #   expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', " +
-  #              "cracked with key: 12345 and date 270317"
-  #   assert_equal expected, c.crack
-  # end
+  def test_key_from_date
+    e = Crack.new
+    expected = "28171"
+    actual = e.key_from_date([28,45,65,20], Date.new(2017, 03, 28))
+    assert_equal expected, actual
+  end
   
-  # def test_it_can_read_message_file
-  #   input_file = "./test/encrypted_message.txt"
-  #   output_file = "./test/decrypted_file.txt"
-  #   c = Crack.new(input_file, output_file)
-  #   c.read_file
-  #   expected = "58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK"
-  #   assert_equal expected, c.message
-  # end
+  def test_it_can_read_message_file
+    input_file = "./test/encrypted_message.txt"
+    output_file = "./test/decrypted_file.txt"
+    c = Crack.new(input_file, output_file)
+    c.read_file
+    expected = "58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK"
+    assert_equal expected, c.message
+  end
 
-  # def test_it_can_crack_message_file
-  #   input_file = "./test/encrypted_message.txt"
-  #   output_file = "./test/decrypted_message.txt"
-  #   c = Crack.new(input_file, output_file)
-  #   c.read_file
-  #   expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', " +
-  #              "cracked with key: 12345 and date 270317"
-  #   assert_equal expected, c.crack
-  # end
+  def test_it_can_crack_message_file
+    input_file = "./test/encrypted_message.txt"
+    output_file = "./test/decrypted_message.txt"
+    c = Crack.new(input_file, output_file)
+    c.read_file
+    expected = "Created ./test/decrypted_message.txt with key of 12345 and date "
+    assert_equal expected, c.crack
+  end
   
-  # def test_it_can_write_cracked_file
-  #   input_file = "./test/encrypted_message.txt"
-  #   output_file = "./test/decrypted_message.txt"
-  #   c = Crack.new(input_file, output_file)
-  #   c.write_decrypted_file
-  #   decrypted_file = "./test/decrypted_message.txt"
-  #   expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', " +
-  #              "cracked with key: 12345 and date 270317"
-  #   actual = File.readlines(decrypted_file).join
-  #   assert_equal expected, actual
-  # end
+  def test_it_can_write_cracked_file
+    input_file = "./test/encrypted_message.txt"
+    output_file = "./test/decrypted_message.txt"
+    c = Crack.new(input_file, output_file)
+    c.write_decrypted_file
+    decrypted_file = "./test/decrypted_message.txt"
+    expected = "Created ./test/decrypted_message.txt with key of 12345 and date "
+    actual = File.readlines(decrypted_file).join
+    assert_equal expected, actual
+  end
   
 end

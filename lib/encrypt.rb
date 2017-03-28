@@ -1,6 +1,6 @@
 require './lib/cryptor'
 require './lib/message_io'
-require 'pry'
+
 
 class Encrypt < Cryptor
   def initialize(message=nil, *args)
@@ -26,7 +26,7 @@ class Encrypt < Cryptor
     end
     rotation = rotation_and_offset
     encrypted = run_the_cipher(rotation)
-    if @output
+    unless @output.nil?
     messenger.write_file(@output, encrypted)
     p "Created #{@output} with key of #{key} and date #{date}"
     else 
@@ -37,5 +37,5 @@ end
 
 ###########################################
 
-#e = Encrypt.new(ARGV[0], ARGV[1])
-#e.encrypt
+# e = Encrypt.new(ARGV[0],ARGV[1])
+# e.encrypt

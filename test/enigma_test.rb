@@ -31,17 +31,17 @@ class EnigmaTest < Minitest::Test
 
   def test_decrypt_with_crack
     e = Enigma.new
-    expected = "message: 'this is so secret ..end..', cracked with key: 12345 and date 2017-03-27"
+    expected = "message: 'this is so secret ..end..', cracked with 12345 and 2017-03-28"
     my_message = "58L*J9Vg4C>*q3UT5Y;hqBGhK"
-    actual = e.crack(my_message, Date.today)
+    actual = e.crack(my_message, Date.new(2017, 03, 28))
     assert_equal expected, actual
   end
 
   def test_decrypt_with_crack
     e = Enigma.new
-    expected = "message: 'This is so secret ..end..', cracked with key: 22329 and date 2017-03-27"
+    expected = "message: 'This is so secret ..end..', cracked with 22329 and 2017-03-28"
     my_message = ":8JRT9T)BC]R03SDCY<[0BE[U"
-    actual = e.crack(my_message, Date.today)
+    actual = e.crack(my_message, Date.new(2017, 03, 28))
     assert_equal expected, actual
   end
 

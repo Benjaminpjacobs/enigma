@@ -7,7 +7,6 @@ class OffsetGen
   def convert_into_offset
     date = date_square
     date = date.split('').map!{|number| number.to_i} 
-    date
   end
 
   def date_square

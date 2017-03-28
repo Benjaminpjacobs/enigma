@@ -30,5 +30,5 @@ end
 
 ####################################
 
-# d = Decrypt.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
+# d = Decrypt.new(ARGV[0], ARGV[2], ARGV[3], ARGV[1],)
 # d.decrypt
