@@ -2,7 +2,7 @@ require "./lib/message_io"
 require "./lib/cryptor"
 require "./lib/enigma_module"
 
-class Crack
+class Crack < Cryptor
   attr_reader :message, :output, :key, :date
 
   CI = {'e' => Cipher::CIPHER.index('e'), 
@@ -76,14 +76,13 @@ class Crack
 
   def crack
     message = decrypt
-    key_and_date = crack_key_and_date(@rotation)
+    key_and_date = crack_key_and_date(@rotation.map{|num| num * -1})
     p "message: '#{message}', #{key_and_date}"
   end
 
   def decrypt
     @rotation = find_rotations
-    e = Cryptor.new(message)
-    e.crypt(:DECRYPT, @rotation)
+    run_the_cipher(@rotation.map!{ |num| num * -1 })
   end
 
   def crack_key_and_date(rotation)
