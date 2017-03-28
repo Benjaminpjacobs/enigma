@@ -91,7 +91,8 @@ class Crack
     date.previous_date
     offset = date.convert_into_offset
     potential_key = generate_potential_key(rotation, offset)
-    until check_pattern(potential_key[1..6])
+
+    until pattern_cracked(potential_key[1..6])
       date.previous_date
       offset = date.convert_into_offset
       potential_key = generate_potential_key(rotation, offset)
@@ -100,11 +101,15 @@ class Crack
   end
 
   def generate_potential_key(rotation, offset)
-    rotation.zip(offset).map{ |numbers| numbers[0] - numbers[1] }.map{ |number| number.to_s.split('') }.flatten
+    rotation.zip(offset).map {|numbers|
+      numbers[0] - numbers[1]
+    }.map{ |number| number.to_s.split('') }.flatten
   end
 
-  def check_pattern(array)
-    array[0] == array[1] && array[2] == array[3] && array[4] == array[5]
+  def pattern_cracked(array)
+    array[0] == array[1] and
+    array[2] == array[3] and
+    array[4] == array[5]
   end
 
   def regenerate(num)
