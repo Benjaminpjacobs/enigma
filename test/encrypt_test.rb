@@ -8,17 +8,21 @@ class EncryptTest < Minitest::Test
   end
 
   def test_it_encrypt_a_message
-    e = Encrypt.new("./test/single_line.txt", "./test/encryptor_message.txt" )
+    input_file = "./test/single_line.txt"
+    output_file = "./test/encryptor_message.txt"
+    e = Encrypt.new(input_file, output_file)
     e.encrypt
-    assert File.delete("./test/encryptor_message.txt")
+    assert File.delete(output_file)
   end
 
-  # def test_it_can_encrypt_with_key_and_date
-  #   e = Encrypt.new("./test/single_line.txt","./test/encrypted_message1.txt", 12345, Date.new(2017, 03, 27))
-  #   e.encrypt
-  #   expected = "^8L*J9VgmYF$p5GiJ7LQn5UX48>@qGVPs5"
-  #   actual = File.read("./test/encrypted_message1.txt")
-  #   assert_equal expected, actual
-  # end
+  def test_it_can_encrypt_with_key_and_date
+    input_file = "./test/single_line.txt"
+    output_file = "./test/encrypted_message1.txt"
+    e = Encrypt.new(input_file, output_file, 12345, Date.new(2017, 03, 27))
+    e.encrypt
+    expected = "^8L*J9VgmYF$p5GiJ7LQn5UX48>@qGVPs5"
+    actual = File.read(output_file)
+    assert_equal expected, actual
+  end
 
 end
