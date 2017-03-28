@@ -92,7 +92,7 @@ class Crack
     offset = date.convert_into_offset
     potential_key = generate_potential_key(rotation, offset)
 
-    until pattern_cracked(potential_key[1..6])
+    until pattern_cracked?(potential_key[1..6])
       date.previous_date
       offset = date.convert_into_offset
       potential_key = generate_potential_key(rotation, offset)
