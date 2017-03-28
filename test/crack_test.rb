@@ -9,73 +9,65 @@ class CrackTest < Minitest::Test
   end
   
   def test_it_can_take_multiple_args
-    c = Crack.new("hello")
-    assert_equal "hello", c.message
-    c = Crack.new("hello", 12345)
-    assert_equal 12345, c.key
+    a = Crack.new("hello")
+    assert_equal "hello", a.message
+
+    b = Crack.new("hello", 12345)
+    assert_equal 12345, b.key
+
     c = Crack.new("hello", Date.today)
     assert_equal Date.today, c.date
-    c = Crack.new("hello", 12345, Date.today)
-    assert_equal 12345, c.key
-    assert_equal Date.today, c.date
-    c = Crack.new("hello.txt", "output.txt", 12345, Date.today)
-    assert_equal 12345, c.key
-    assert_equal Date.today, c.date
-    assert_equal "output.txt", c.output
+
+    d = Crack.new("hello", 12345, Date.today)
+    assert_equal 12345, d.key
+    assert_equal Date.today, d.date
+
+    e = Crack.new("hello.txt", "output.txt", 12345, Date.today)
+    assert_equal 12345, e.key
+    assert_equal Date.today, e.date
+    assert_equal "output.txt", e.output
   end
 
   def test_it_can_find_last_group_of_four
     c = Crack.new("hello ..end..")
-    actual = c.last_group_of_four
-    expected = ['e', 'n', 'd', '.']
-    assert_equal expected, actual
+    assert_equal ['e', 'n', 'd', '.'], c.last_group_of_four
   end
 
   def test_it_can_determine_comparison_index
-    c = Crack.new("12345678")
-    actual = c.comparison_index
-    expected = [13, 3, 37, 37]
-    assert_equal expected, actual
-    c = Crack.new("123456789")
-    actual = c.comparison_index
-    expected = [4, 13, 3, 37]
-    assert_equal expected, actual
+    a = Crack.new("12345678")
+    assert_equal [13, 3, 37, 37], a.comparison_index
+
+    b = Crack.new("123456789")
+    assert_equal [4, 13, 3, 37], b.comparison_index
+
     c = Crack.new("1234567890")
-    actual = c.comparison_index
-    expected = [37, 4, 13, 3]
-    assert_equal expected, actual
-    c = Crack.new("12345678901")
-    actual = c.comparison_index
-    expected = [37, 37, 4, 13]
-    assert_equal expected, actual  
+    assert_equal [37, 4, 13, 3], c.comparison_index
+
+    d = Crack.new("12345678901")
+    assert_equal [37, 37, 4, 13], d.comparison_index  
   end
 
   def test_find_character_indexes
     c = Crack.new("rj3w")
     actual = c.find_character_indexes
-    expected = [17, 9, 29, 22]
-    assert_equal expected, actual
+    assert_equal [17, 9, 29, 22], actual
   end
 
   def test_find_rotations
     c = Crack.new("KZH#pZ;")
     actual = c.find_rotations
-    expected = [12, 27, 42, 54]
-    assert_equal expected, actual
+    assert_equal [12, 27, 42, 54], actual
   end
 
   def test_decrypt
     c = Crack.new("KZH#pZ;")
-    expected = "..end.."
-    actual = c.decrypt
-    assert_equal expected, actual
+    assert_equal "..end..", c.decrypt
   end
 
   def test_decrypt_longer
     c = Crack.new("58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK")
     expected = "this is a much longer message so hopefully this wokrs ..end.."
-    actual = c.decrypt
-    assert_equal expected, actual
+    assert_equal expected, c.decrypt
   end
 
   def test_crack_key_and_dates
@@ -87,31 +79,39 @@ class CrackTest < Minitest::Test
 
   def test_decrypt_and_crack_key_and_date
     c = Crack.new("58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK")
-    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-27"
-    actual = c.crack
-    assert_equal expected, actual
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', " +
+               "cracked with key: 12345 and date 2017-03-27"
+    assert_equal expected, c.crack
   end
   
   def test_it_can_read_message_file
-    c = Crack.new("./test/encrypted_message.txt", "./test/decrypted_file.txt")
+    input_file = "./test/encrypted_message.txt"
+    output_file = "./test/decrypted_file.txt"
+    c = Crack.new(input_file, output_file)
     c.read_file
     expected = "58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK"
     assert_equal expected, c.message
   end
 
   def test_it_can_crack_message_file
-    c = Crack.new("./test/encrypted_message.txt", "./test/decrypted_message.txt")
+    input_file = "./test/encrypted_message.txt"
+    output_file = "./test/decrypted_message.txt"
+    c = Crack.new(input_file, output_file)
     c.read_file
-    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-27"
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', " +
+               "cracked with key: 12345 and date 2017-03-27"
     assert_equal expected, c.crack
   end
   
   def test_it_can_write_cracked_file
-    c = Crack.new("./test/encrypted_message.txt", "./test/decrypted_message.txt")
+    input_file = "./test/encrypted_message.txt"
+    output_file = "./test/decrypted_message.txt"
+    c = Crack.new(input_file, output_file)
     c.write_decrypted_file
     decrypted_file = "./test/decrypted_message.txt"
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', " +
+               "cracked with key: 12345 and date 2017-03-27"
     actual = File.readlines(decrypted_file).join
-    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-27"
     assert_equal expected, actual
   end
   

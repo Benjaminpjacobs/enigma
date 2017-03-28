@@ -7,12 +7,15 @@ class DecryptTest < Minitest::Test
   end
 
   def test_it_decrypt_a_message
-    e = Decrypt.new("./test/encrypted_message1.txt", "./test/decrypted_message.txt", 12345, "270317")
+    input_file = "./test/encrypted_message1.txt"
+    output_file = "./test/decrypted_message.txt"
+    e = Decrypt.new(input_file, output_file, 12345, "270317")
+    expected = "Created ./test/decrypted_message.txt " + 
+               "with key of 12345 and date 2017-03-27"
     actual = e.decrypt
-    expected = "Created ./test/decrypted_message.txt with key of 12345 and date 2017-03-27"
     assert_equal expected, actual
-    actual = File.read("./test/decrypted_message.txt")
     expected = 'This is a coded, gibberish message'
+    actual = File.read(output_file)
     assert_equal expected, actual
   end
 
