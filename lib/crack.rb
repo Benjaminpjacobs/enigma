@@ -106,7 +106,7 @@ class Crack
     }.map{ |number| number.to_s.split('') }.flatten
   end
 
-  def pattern_cracked(array)
+  def pattern_cracked?(array)
     array[0] == array[1] and
     array[2] == array[3] and
     array[4] == array[5]
