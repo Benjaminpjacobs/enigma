@@ -1,1 +1,1 @@
-message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-27
+This is a coded, gibberish message

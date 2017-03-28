@@ -15,7 +15,8 @@ class EnigmaTest < Minitest::Test
   def test_integration_encrypt_with_key_and_date
     enigma = Enigma.new
     my_message = "this is so secret ..end.."
-    expected = "message was encrypted with key 12345. Encrypted message: 58L*J9Vg4C>*q3UT5Y;hqBGhK"
+    expected = "message was encrypted with key 12345. " + 
+               "Encrypted message: 58L*J9Vg4C>*q3UT5Y;hqBGhK"
     actual = enigma.encrypt(my_message, 12345, Date.new(2017,03,25))
     assert_equal expected, actual
   end

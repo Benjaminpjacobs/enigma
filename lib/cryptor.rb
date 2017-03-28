@@ -66,11 +66,12 @@ class Cryptor
 
   def cipher_sub_array(array, rotation, mode)
     array.map!.with_index do |letter, index|
-      cipher_sub_array = { 0 => encrypt_or_decrypt(rotation[0], letter, mode),
-                           1 => encrypt_or_decrypt(rotation[1], letter, mode),
-                           2 => encrypt_or_decrypt(rotation[2], letter, mode),
-                           3 => encrypt_or_decrypt(rotation[3], letter, mode),
-                          }
+      cipher_sub_array = { 
+        0 => encrypt_or_decrypt(rotation[0], letter, mode),
+        1 => encrypt_or_decrypt(rotation[1], letter, mode),
+        2 => encrypt_or_decrypt(rotation[2], letter, mode),
+        3 => encrypt_or_decrypt(rotation[3], letter, mode),
+      }
       cipher_sub_array[index]
     end
   end 
