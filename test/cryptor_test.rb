@@ -72,28 +72,28 @@ class CryptorTest < Minitest::Test
 
   def test_small_encryption
     enigma = Cryptor.new("hell", 10102, Date.new(2017, 3, 24))
-    actual = enigma.crypt("encrypt")
+    actual = enigma.crypt(:ENCRYPT)
     expected = "rj3w"
     assert_equal expected, actual
   end
 
   def test_small_decryption
     enigma = Cryptor.new("rj3w", 10102, Date.new(2017, 3, 24))
-    actual = enigma.crypt("decrypt")
+    actual = enigma.crypt(:DECRYPT)
     expected = "hell"
     assert_equal expected, actual
   end
 
   def test_encryption_with_space
     enigma = Cryptor.new("hello, there", 10102, Date.new(2017, 3, 24))
-    actual = enigma.crypt("encrypt")
+    actual = enigma.crypt(:ENCRYPT)
     expected = "rj3wyEP4rj9p"
     assert_equal expected, actual
   end
   
   def test_decryption_with_space
     enigma = Cryptor.new("rj3wyEP4rj9p", 10102, Date.new(2017, 3, 24))
-    actual = enigma.crypt("decrypt")
+    actual = enigma.crypt(:DECRYPT)
     expected = "hello, there"
     assert_equal expected, actual
   end

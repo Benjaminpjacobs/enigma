@@ -87,7 +87,7 @@ class CrackTest < Minitest::Test
 
   def test_decrypt_and_crack_key_and_date
     c = Crack.new("58L*J9VgmYP)o8>!0BJT3YPT4GDVqYV$J8R%q6X!xM>(t9Vg8CN&4Y;hqBGhK")
-    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-26"
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-27"
     actual = c.crack
     assert_equal expected, actual
   end
@@ -102,7 +102,7 @@ class CrackTest < Minitest::Test
   def test_it_can_crack_message_file
     c = Crack.new("./test/encrypted_message.txt", "./test/decrypted_message.txt")
     c.read_file
-    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-26"
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-27"
     assert_equal expected, c.crack
   end
   
@@ -111,8 +111,7 @@ class CrackTest < Minitest::Test
     c.write_decrypted_file
     decrypted_file = "./test/decrypted_message.txt"
     actual = File.readlines(decrypted_file).join
-    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-26"
-    binding.pry
+    expected = "message: 'this is a much longer message so hopefully this wokrs ..end..', cracked with key: 12345 and date 2017-03-27"
     assert_equal expected, actual
   end
   

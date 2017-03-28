@@ -1,13 +1,20 @@
 require "./lib/message_io"
 require "./lib/cryptor"
 require "./lib/enigma_module"
-require 'pry'
 
 class Crack
   attr_reader :message, :output, :key, :date
 
-  CI = {'e' => 4, "n" => 13, 
-        'd' => 3, '.' => 37}
+  CI = {'e' => Cipher::CIPHER.index('e'), 
+        'n' => Cipher::CIPHER.index('n'), 
+        'd' => Cipher::CIPHER.index('d'), 
+        '.' => Cipher::CIPHER.index('.')}
+
+  COMPARISON_INDEX = { 4=> [CI["n"], CI["d"], CI["."], CI["."]], 
+                       3=> [CI["."], CI["."], CI["e"], CI["n"]],
+                       2=> [CI["."], CI["e"], CI["n"], CI["d"]],
+                       1=> [CI["e"], CI["n"], CI["d"], CI["."]]
+                      }
 
   def initialize(message=nil, *argument)
     @message = message
@@ -38,19 +45,9 @@ class Crack
   end
 
   def comparison_index
-    case parse_and_split[-1].length
-    when 4
-      [CI["n"], CI["d"], CI["."], CI["."]]
-    when 3
-      [CI["."], CI["."], CI["e"], CI["n"]]
-    when 2
-      [CI["."], CI["e"], CI["n"], CI["d"]]
-    when 1
-      [CI["e"], CI["n"], CI["d"], CI["."]]
-    end
+    COMPARISON_INDEX[parse_and_split[-1].length]
   end
 
-  ### turn into hash table ^
   
   def find_character_indexes
     last_group_of_four.map do |character|
