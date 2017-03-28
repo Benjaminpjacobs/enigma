@@ -36,5 +36,15 @@ class EnigmaTest < Minitest::Test
     actual = e.crack(my_message, Date.today)
     assert_equal expected, actual
   end
+
+  def test_decrypt_with_crack
+    e = Enigma.new
+    expected = "message: 'This is so secret ..end..', cracked with key: 22329 and date 2017-03-27"
+    my_message = ":8JRT9T)BC]R03SDCY<[0BE[U"
+    actual = e.crack(my_message, Date.today)
+    assert_equal expected, actual
+  end
+
+  
 end
 
