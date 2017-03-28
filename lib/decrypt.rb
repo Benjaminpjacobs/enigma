@@ -7,7 +7,15 @@ class Decrypt < Cryptor
     @message = message
     @output = output
     @key = key
-    @date = date
+    @date = convert_date(date) unless date.nil?
+  end
+
+  def convert_date(date)
+    date_split = date.split('').each_slice(2).to_a.map{|sub| sub.join}
+    date = Date.new(
+      ("20"+ date_split[2].to_s).to_i,
+      date_split[1].to_i,
+      date_split[0].to_i)
   end
 
   def decrypt
