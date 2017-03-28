@@ -33,12 +33,6 @@ class Crack < Cryptor
     end
   end
 
-  def parse_and_split
-    m = MessageIO.new(@message)
-    m.parse
-    m.split_into_sub_arrays
-  end
-
   def last_group_of_four
     parse_and_split.reverse.find{|sub_array|sub_array.length == 4}
   end
