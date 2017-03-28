@@ -13,7 +13,6 @@ class Encrypt < Cryptor
   def encrypt
     messenger = MessageIO.new(@message)
     @message= messenger.read_file
-    # e = Cryptor.new(@input, @key, @date)
     rotation = rotation_and_offset
     encrypted = run_the_cipher(rotation)
     messenger.write_file(@output, encrypted)
