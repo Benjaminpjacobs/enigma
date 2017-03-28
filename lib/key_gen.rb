@@ -1,3 +1,4 @@
+require 'pry'
 class KeyGen
   attr_reader :key
   def initialize(key=0)

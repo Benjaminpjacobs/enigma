@@ -26,15 +26,15 @@ class EnigmaTest < Minitest::Test
     expected = "this is so secret ..end.."
     my_message = "58L*J9Vg4C>*q3UT5Y;hqBGhK"
     actual = e.decrypt(my_message, 12345, Date.new(2017,03,25))
-    assert_equal actual, expected
+    assert_equal expected, actual
   end
 
   def test_decrypt_with_crack
     e = Enigma.new
-    expected = "this is so secret ..end.."
+    expected = "message: 'this is so secret ..end..', cracked with key: 12345 and date 2017-03-27"
     my_message = "58L*J9Vg4C>*q3UT5Y;hqBGhK"
-    actual = e.crack(my_message)
-    assert_equal actual, expected
+    actual = e.crack(my_message, Date.today)
+    assert_equal expected, actual
   end
 end
 

@@ -2,6 +2,7 @@ require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
 require './lib/enigma_module'
+require'pry'
 
 class Cryptor
   attr_accessor :message, :key, :date
@@ -25,7 +26,8 @@ class Cryptor
   def date_into_offset
     if date.nil?
       @date = Date.today
-      OffsetGen.new.convert_into_offset 
+      offset = OffsetGen.new.convert_into_offset 
+      offset
     else
       OffsetGen.new(date).convert_into_offset
     end
@@ -58,10 +60,10 @@ class Cryptor
   def cipher_sub_array(array, rotation)
     array.map!.with_index do |letter, index|
       cipher_sub_array = { 
-        0 => encrypt_or_decrypt(rotation[0], letter, mode),
-        1 => encrypt_or_decrypt(rotation[1], letter, mode),
-        2 => encrypt_or_decrypt(rotation[2], letter, mode),
-        3 => encrypt_or_decrypt(rotation[3], letter, mode),
+        0 => cipher(rotation[0], letter),
+        1 => cipher(rotation[1], letter),
+        2 => cipher(rotation[2], letter),
+        3 => cipher(rotation[3], letter),
       }
       cipher_sub_array[index]
     end

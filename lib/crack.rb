@@ -123,5 +123,4 @@ class Crack < Cryptor
     read_file
     MessageIO.new.write_file(@output, crack)
   end
-  
 end

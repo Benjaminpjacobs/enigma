@@ -3,22 +3,36 @@ require './lib/message_io'
 require 'pry'
 
 class Encrypt < Cryptor
-  def initialize(message=nil, output=nil, key=nil, date=nil)
+  def initialize(message=nil, *args)
     @message = message
-    @output = output
-    @key = key
-    @date = date
+    if args[0] && args[1] && args[2]
+      @key = args[0]
+      @date = args[1]
+      @output = args[2]
+    elsif args[0] && args[1]
+      @key = args[0]
+      @date = args[1]
+    elsif
+      @output = args[0]
+      @key = nil
+      @date = nil
+    end
   end
   
   def encrypt
     messenger = MessageIO.new(@message)
-    @message= messenger.read_file
+    if @message.end_with?(".txt")
+      @message= messenger.read_file
+    end
     rotation = rotation_and_offset
     encrypted = run_the_cipher(rotation)
+    if @output
     messenger.write_file(@output, encrypted)
     p "Created #{@output} with key of #{key} and date #{date}"
+    else 
+    encrypted
+    end
   end
-  
 end
 
 ###########################################

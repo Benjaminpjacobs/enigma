@@ -3,20 +3,27 @@ require './lib/message_io'
 require 'pry'
 
 class Decrypt < Cryptor
-  def initialize(message=nil, output=nil, key=nil, date=nil)
+
+  def initialize(message=nil, key=nil, date=nil, output=nil)
     @message = message
-    @output = output
     @key = key
     @date = date
+    @output = output
   end
 
   def decrypt
     messenger = MessageIO.new(@message)
-    @message = messenger.read_file
+    if @message.end_with?(".txt")
+      @message= messenger.read_file
+    end
     rotation = rotation_and_offset
     decrypted  = run_the_cipher(rotation.map!{|num| num * -1})
-    messenger.write_file(@output, decrypted)
-    p "Created #{@output} with key of #{key} and date #{date}"
+    unless @output.nil?
+      messenger.write_file(@output, decrypted)
+      p "Created #{@output} with key of #{key} and date #{date}"
+    else 
+      p "#{decrypted}"
+    end
   end
 
 end

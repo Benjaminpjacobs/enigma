@@ -2,7 +2,6 @@ task default: %w[test]
 
 task :test do
   ruby "./test/crack_test.rb"
-  ruby "./test/cryptor_test.rb"
   ruby "./test/decrypt_test.rb"
   ruby "./test/encrypt_test.rb"
   ruby "./test/enigma_test.rb"
