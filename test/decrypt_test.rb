@@ -12,11 +12,6 @@ class EncryptTest < Minitest::Test
     assert_equal './test/encrypted_file.txt', d.input
     assert_equal './test/decrypted_file.txt', d.output
   end
-  def test_it_can_read_file
-    d = Decrypt.new('./test/encrypted_file.txt','./test/decrypted_file.txt', 26078, Date.new(2017, 03,29))
-    expected = 'a&xvX*7A0qrr3$sCX^xe1$6lF&Mp4?7d6$MBY$2gYr'
-    assert_equal expected, d.read_file
-  end
   def test_it_can_decrypt_file
     d = Decrypt.new('./test/encrypted_file.txt','./test/decrypted_file.txt', 26078, Date.new(2017, 03,29))
     expected = "Message decrypted with key: 26078 and date: 2017-03-29"

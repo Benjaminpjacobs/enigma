@@ -1,10 +1,3 @@
-# require './lib/key_gen'
-# require './lib/offset_gen'
-# require './lib/message_io'
-# require './lib/enigma_module'
-# require'pry'
-
-# module Cipher
 module Cipher
 
   CIPHER = 
@@ -17,7 +10,8 @@ module Cipher
   %w(! @ # $ % ^ & * ( ) [ ] < 
   > ; : / ? \ | )
 
-  CIPHER_INDEX = {'e' => CIPHER.index('e'), 
+  CIPHER_INDEX = {
+      'e' => CIPHER.index('e'), 
       'n' => CIPHER.index('n'), 
       'd' => CIPHER.index('d'), 
       '.' => CIPHER.index('.')}

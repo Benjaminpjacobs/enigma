@@ -5,6 +5,7 @@ require './lib/offset_gen'
 require './lib/message_io'
 
 class EncryptMessage < Cryption
+  include MessageIO
   attr_reader :to_encrypt
   def initialize(message, key=nil, date=Date.today)
     @to_encrypt = Message.new(message, key, date)
@@ -22,9 +23,8 @@ class EncryptMessage < Cryption
   end
   
   def parse_and_split_message
-    messenger = MessageIO.new(@to_encrypt.message)
-    messenger.parse
-    @to_encrypt.message = messenger.split_into_sub_arrays
+    message = parse(@to_encrypt.message)
+    @to_encrypt.message = split_into_sub_arrays(message)
   end
   
   def encrypt

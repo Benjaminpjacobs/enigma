@@ -5,6 +5,7 @@ require './lib/offset_gen'
 require './lib/message_io'
 require 'pry'
 class CrackMessage < Cryption
+  include MessageIO
   attr_reader :to_crack
 
   def initialize(message, date=Date.today)
@@ -12,9 +13,8 @@ class CrackMessage < Cryption
   end
 
   def parse_and_split_message
-    messenger = MessageIO.new(@to_crack.message)
-    messenger.parse
-    @to_crack.message = messenger.split_into_sub_arrays
+    message = parse(@to_crack.message)
+    @to_crack.message = split_into_sub_arrays(message)
   end
 
   def last_group_of_four

@@ -12,11 +12,6 @@ class EncryptTest < Minitest::Test
     assert_equal './test/single_line.txt', e.input
     assert_equal './test/encrypted_file.txt', e.output
   end
-  def test_it_can_read_file
-    e = Encrypt.new('./test/single_line.txt', './test/encrypted_file.txt')
-    expected = "This is a coded, gibberish message ..end.."
-    assert_equal expected, e.read_file
-  end
   def test_it_can_encrypt_file
     e = Encrypt.new('./test/single_line.txt', './test/encrypted_file.txt', 26078)
     expected = "Message encrypted with key: 26078 and date: 2017-03-29"
