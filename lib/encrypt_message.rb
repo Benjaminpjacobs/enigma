@@ -3,17 +3,18 @@ require './lib/cryption_module'
 require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
+require 'pry'
 
 class EncryptMessage < Cryption
-  include MessageIO, KeyGen
+  include MessageIO, KeyGen, OffsetGen
   attr_reader :to_encrypt
+
   def initialize(message, key=nil, date=Date.today)
     @to_encrypt = Message.new(message, key, date)
   end
 
   def get_offset
-    offset = OffsetGen.new(@to_encrypt.date)
-    @to_encrypt.offset = offset.convert_into_offset
+    @to_encrypt.offset = convert_into_offset(@to_encrypt.date)
   end
   
   def get_rotations

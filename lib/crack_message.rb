@@ -4,7 +4,7 @@ require './lib/offset_gen'
 require './lib/message_io'
 
 class CrackMessage < Cryption
-  include MessageIO
+  include MessageIO, OffsetGen
   attr_reader :to_crack
 
   def initialize(message, date=Date.today)
@@ -50,8 +50,7 @@ class CrackMessage < Cryption
   end
 
   def key_from_date
-    offset = OffsetGen.new(@to_crack.date)
-    offset = offset.convert_into_offset
+    offset = convert_into_offset(@to_crack.date)
     split_key = @to_crack.rotation.zip(offset).map! do |sub|
       if sub[0] < 10
         (sub[0] + Cipher::CIPHER.length) - sub[1]
@@ -59,11 +58,11 @@ class CrackMessage < Cryption
         (sub[0] - sub[1])
       end
     end
-    includes_leading_zeros(split_key)
+    include_leading_zeros(split_key)
     @to_crack.key = regenerate(split_key.join.split(''))
   end
 
-  def includes_leading_zeros(split_key)
+  def include_leading_zeros(split_key)
     split_key.map! do |number|
       if number > 10
         number.to_s
