@@ -8,7 +8,7 @@ class CrackMessage < Cryption
   attr_reader :to_crack
 
   def initialize(message, date=Date.today)
-    @to_crack = Message.new(message, date)
+    @to_crack = Message.new(message, nil, date)
   end
 
   def parse_and_split_message
@@ -54,9 +54,24 @@ class CrackMessage < Cryption
     offset = OffsetGen.new(@to_crack.date)
     offset = offset.convert_into_offset
     split_key = @to_crack.rotation.zip(offset).map! do |sub|
-      (sub[0] - sub[1])
+      if sub[0] < 10
+        (sub[0] + Cipher::CIPHER.length) - sub[1]
+      else
+        (sub[0] - sub[1])
+      end
     end
+    includes_leading_zeros(split_key)
     @to_crack.key = regenerate(split_key.join.split(''))
+  end
+
+  def includes_leading_zeros(split_key)
+    split_key.map! do |number|
+      if number > 10
+        number.to_s
+      else
+        "0" + number.to_s
+      end
+    end
   end
   
   def regenerate(num)
@@ -73,7 +88,6 @@ class CrackMessage < Cryption
   def crack
     decrypt
     key_from_date
-    binding.pry
-    "Message: #{@to_crack.message}. Cracked with key: #{@to_crack.key} and date: #{@to_crack.date.to_s}"
+    "Message cracked with key: #{@to_crack.key} and date: #{@to_crack.date.to_s}"
   end
 end
