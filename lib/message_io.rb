@@ -1,26 +1,19 @@
-require './lib/cryptor'
+module MessageIO
 
-class MessageIO
-
-  def initialize(message="")
-    @message = message
-  end
-
-  def read_file
-    @message = File.read(@message).gsub("\n", " ")
+  def read_file(file_name)
+    # File.read(file_name).gsub("\n", " ")
+    File.read(file_name)
   end
   
-  def parse
-    @message = @message.split('')
+  def parse(message)
+    message.split('')
   end
   
-  def split_into_sub_arrays
-    @message = @message.each_slice(4).to_a
+  def split_into_sub_arrays(message)
+    message.each_slice(4).to_a
   end
   
-  def write_file(file_name, message = @message)
+  def write_file(file_name, message)
     File.write(file_name, message)
   end
-
-  
 end
