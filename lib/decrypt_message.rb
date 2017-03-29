@@ -4,8 +4,8 @@ require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
 
-class DecryptMessage < Cryption
-  include MessageIO, KeyGen, OffsetGen
+class DecryptMessage 
+  include Cryption,MessageIO, KeyGen, OffsetGen
   attr_reader :to_decrypt
 
   def initialize(message, key, date)

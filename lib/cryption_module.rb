@@ -1,4 +1,4 @@
-module Cipher
+module Cryption
 
   CIPHER = 
   %w(a b c d e f g h i j k l m 
@@ -25,9 +25,7 @@ module Cipher
                        1=> [CIPHER_INDEX["e"], CIPHER_INDEX["n"], 
                             CIPHER_INDEX["d"], CIPHER_INDEX["."]]
                       }
-end
 
-class Cryption
     
   def rotation_and_offset(rotation, offset)
     combo = rotation.zip(offset)
@@ -35,7 +33,7 @@ class Cryption
   end
   
   def cipher(key, value)
-    cipher_array = Cipher::CIPHER.zip(Cipher::CIPHER.rotate(key))
+    cipher_array = CIPHER.zip(CIPHER.rotate(key))
     cipher_hash(cipher_array, value)
   end
 

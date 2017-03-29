@@ -1,9 +1,5 @@
 module MessageIO
 
-  # def initialize(message="")
-  #   @message = message
-  # end
-
   def read_file(file_name)
     File.read(file_name).gsub("\n", " ")
   end
@@ -20,5 +16,4 @@ module MessageIO
     File.write(file_name, message)
   end
 
-  
 end

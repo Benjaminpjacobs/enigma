@@ -3,8 +3,8 @@ require './lib/cryption_module'
 require './lib/offset_gen'
 require './lib/message_io'
 
-class CrackMessage < Cryption
-  include MessageIO, OffsetGen
+class CrackMessage
+  include Cryption, MessageIO, OffsetGen
   attr_reader :to_crack
 
   def initialize(message, date=Date.today)
@@ -21,12 +21,12 @@ class CrackMessage < Cryption
   end
 
   def comparison_index
-    Cipher::COMPARISON_INDEX[@to_crack.message[-1].length]
+    COMPARISON_INDEX[@to_crack.message[-1].length]
   end
 
   def find_character_indexes
     last_group_of_four.map do |character|
-      Cipher::CIPHER.index(character)
+      CIPHER.index(character)
     end
   end
 
@@ -42,7 +42,7 @@ class CrackMessage < Cryption
   def positive_rotations(rotation)
     rotation.map! do |number|
       if number < 0 
-        number + Cipher::CIPHER.length 
+        number + CIPHER.length 
       else
         number
       end
@@ -53,7 +53,7 @@ class CrackMessage < Cryption
     offset = convert_into_offset(@to_crack.date)
     split_key = @to_crack.rotation.zip(offset).map! do |sub|
       if sub[0] < 10
-        (sub[0] + Cipher::CIPHER.length) - sub[1]
+        (sub[0] + CIPHER.length) - sub[1]
       else
         (sub[0] - sub[1])
       end
