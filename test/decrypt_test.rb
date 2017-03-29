@@ -4,8 +4,8 @@ require './lib/decrypt'
 class DecryptTest < Minitest::Test
   
   def setup
-    @input = './test/single_line_encrypted.txt'
-    @output = './test/single_line_decrypted.txt'
+    @input = './test/test_files/single_line_encrypted.txt'
+    @output = './test/test_files/single_line_decrypted.txt'
     @key = 23145
     @date = Date.new(2017, 03, 29)
   end

@@ -13,6 +13,17 @@ class CrackMessageTest < Minitest::Test
     assert_instance_of CrackMessage, c
   end
 
+  def test_crack
+    c = CrackMessage.new(@encrypted_string, @date)
+    expected = "Message cracked with key: 12345 and date: 2017-03-28"
+    assert_equal expected, c.crack
+  end
+
+  def test_crack_with_leading_zeros
+    c = CrackMessage.new("3lsLHm2$w2HL3vsGqBI%orn%I", @date)
+    expected = "Message cracked with key: 01802 and date: 2017-03-28"
+    assert_equal expected, c.crack
+  end
   # def test_it_can_parse_and_split
   #   c = CrackMessage.new(@encrypted_string, @date)
   #   c.parse_and_split_message
@@ -46,16 +57,4 @@ class CrackMessageTest < Minitest::Test
   #   c.parse_and_split_message
   #   assert_equal [12, 27, 42, 54], c.find_rotations
   # end
-
-  def test_crack
-    c = CrackMessage.new(@encrypted_string, @date)
-    expected = "Message cracked with key: 12345 and date: 2017-03-28"
-    assert_equal expected, c.crack
-  end
-
-  def test_crack_with_leading_zeros
-    c = CrackMessage.new("3lsLHm2$w2HL3vsGqBI%orn%I", @date)
-    expected = "Message cracked with key: 01802 and date: 2017-03-28"
-    assert_equal expected, c.crack
-  end
 end
