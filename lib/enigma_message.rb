@@ -16,8 +16,7 @@ class Enigma
   end
   
   def crack(message=nil, date=Date.today)
-    c = CrackMessage.new
-    c.instantiate_message(message, date)
+    c = CrackMessage.new(message, date)
     c.crack
     c.to_crack.message
   end

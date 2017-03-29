@@ -7,13 +7,8 @@ require 'pry'
 class CrackMessage < Cryption
   attr_reader :to_crack
 
-  def initialize
-    @to_crack = nil
-  end
-
-  def instantiate_message(message, date)
-    @to_crack = Message.new(message)
-    @to_crack.date = date
+  def initialize(message, date=Date.today)
+    @to_crack = Message.new(message, date)
   end
 
   def parse_and_split_message
