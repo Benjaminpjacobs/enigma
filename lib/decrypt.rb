@@ -21,5 +21,5 @@ class Decrypt
 end
 
 #######################
-d = Decrypt.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
-d.decrypt
+# d = Decrypt.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
+# d.decrypt

@@ -20,5 +20,5 @@ class Encrypt
 end
 
 ##########################
-e = Encrypt.new(ARGV[0], ARGV[1], ARGV[2])
-e.encrypt
+# e = Encrypt.new(ARGV[0], ARGV[1], ARGV[2])
+# e.encrypt

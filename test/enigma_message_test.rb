@@ -17,19 +17,19 @@ class EnigmaMessageTest < Minitest::Test
     e = Enigma.new
     message = "message ..end.."
     actual = e.encrypt(message, 12345, Date.new(2017, 03, 28))
-    assert_equal "y5V*m7HgKZH#pZ;", actual
+    assert_equal "y5V*m7HfKZH#pZ;", actual
   end
   
   def test_it_can_decrypt_message
     e = Enigma.new
-    actual = e.decrypt("y5V*m7HgKZH#pZ;", 12345, Date.new(2017, 03, 28))
+    actual = e.decrypt("y5V*m7HfKZH#pZ;", 12345, Date.new(2017, 03, 28))
     expected = "message ..end.."
     assert_equal expected, actual
   end
 
   def test_it_can_crack_message
     e = Enigma.new
-    actual = e.crack("y5V*m7HgKZH#pZ;", Date.new(2017, 03, 28))
+    actual = e.crack("y5V*m7HfKZH#pZ;", Date.new(2017, 03, 28))
     expected = "message ..end.."
     assert_equal expected, actual
   end

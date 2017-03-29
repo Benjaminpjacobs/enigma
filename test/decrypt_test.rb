@@ -24,8 +24,8 @@ class DecryptTest < Minitest::Test
   def test_it_can_write_file
     d = Decrypt.new(@input, @output, @key, @date)
     d.decrypt
-    expected = File.readlines(@output).join
-    actual = "This is my long super secret message ..end.."
+    actual = File.readlines(@output).join
+    expected = "This is my long super secret message ..end.."
     assert_equal expected, actual
   end
 end
