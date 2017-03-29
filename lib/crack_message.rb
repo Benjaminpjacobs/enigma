@@ -1,9 +1,8 @@
 require './lib/message.rb'
 require './lib/cryption_module'
-require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
-require 'pry'
+
 class CrackMessage < Cryption
   include MessageIO
   attr_reader :to_crack

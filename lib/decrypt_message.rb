@@ -5,7 +5,7 @@ require './lib/offset_gen'
 require './lib/message_io'
 
 class DecryptMessage < Cryption
-  include MessageIO
+  include MessageIO, KeyGen
   attr_reader :to_decrypt
 
   def initialize(message, key, date)
@@ -18,8 +18,7 @@ class DecryptMessage < Cryption
   end
   
   def get_rotations
-    keygen = KeyGen.new(@to_decrypt.key)
-    @to_decrypt.rotation = keygen.generate
+    @to_decrypt.rotation = generate(@to_decrypt.key)
   end
 
   def parse_and_split_message

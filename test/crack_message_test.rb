@@ -34,6 +34,6 @@ class CrackMessageTest < Minitest::Test
   end
   def test_crack
     c = CrackMessage.new("y5V*m7HgKZH#pZ;", Date.new(2017, 03, 28))
-    assert_equal "Message: message ..end... Cracked with key: 12345 and date: 2017-03-28" , c.crack
+    assert_equal "Message cracked with key: 12345 and date: 2017-03-28" , c.crack
   end
 end

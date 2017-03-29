@@ -1,7 +1,6 @@
 module KeyGen
   
   def generate(key)
-    key = generate_original_key if key.nil?
     divided_key = key_into_array(key)
     rotations = output_rotations(divided_key)
   end
@@ -9,11 +8,6 @@ module KeyGen
   def generate_original_key
     "%05d" % Random.rand(10000..99999) 
   end
-
-  # def convert_key(incoming_key)
-  #   divided_key = key_into_array(incoming_key)
-  #   rotations = output_rotations(divided_key)
-  # end
   
   def key_into_array(key)
     key = key.to_s.split("").to_a
