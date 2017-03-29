@@ -1,10 +1,11 @@
 require "./lib/message_io"
 require "./lib/cryptor"
 require "./lib/enigma_module"
+
 class Crack < Cryptor
   attr_reader :message, :output, :key, :date
 
-  CI = {'e' => Cipher::CIPHER.index('e'), 
+  CIPHER_INDEX = {'e' => Cipher::CIPHER.index('e'), 
         'n' => Cipher::CIPHER.index('n'), 
         'd' => Cipher::CIPHER.index('d'), 
         '.' => Cipher::CIPHER.index('.')}
@@ -82,8 +83,8 @@ class Crack < Cryptor
   end
 
   def decrypt
-    @rotation = find_rotations
-    run_the_cipher(@rotation.map{ |num| num * -1 })
+    # @rotation = find_rotations
+    run_the_cipher(@to_crack.rotation.map{ |num| num * -1 })
   end
 
   def key_from_date(rotation=@rotation, date=Date.today)
@@ -95,20 +96,21 @@ class Crack < Cryptor
       regenerate(split_key.join.split(''))
   end
 
-  def regenerate(num)
-    (num[0] + num[1] + num[3] + num[5] + num[7])    
-  end
+#   def regenerate(num)
+#     (num[0] + num[1] + num[3] + num[5] + num[7])    
+#   end
 
-  def read_file
-    @message = MessageIO.new(@message).read_file
-  end
+#   def read_file
+#     @message = MessageIO.new(@message).read_file
+#   end
   
-  def write_decrypted_file
-    read_file
-    MessageIO.new.write_file(@output, crack)
-  end
-end
+#   def write_decrypted_file
+#     read_file
+#     MessageIO.new.write_file(@output, crack)
+#   end
+# end
 
 ######################################
+
 # c = Crack.new(ARGV[0], ARGV[1], ARGV[2])
 # c.crack

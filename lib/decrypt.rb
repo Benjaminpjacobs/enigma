@@ -22,7 +22,7 @@ class Decrypt < Cryptor
       messenger.write_file(@output, decrypted)
       p "Created #{@output} with key of #{key} and date #{date}"
     else 
-      p "#{decrypted}"
+      decrypted
     end
   end
 

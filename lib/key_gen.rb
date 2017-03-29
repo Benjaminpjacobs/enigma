@@ -6,9 +6,14 @@ class KeyGen
   end
   
   def generate
-    generate_original  
-    divided_key = key_into_array(@key)
-    rotations = output_rotations(divided_key)
+    if key.nil?
+      generate_original  
+      divided_key = key_into_array(@key)
+      rotations = output_rotations(divided_key)
+    else
+      divided_key = key_into_array(@key)
+      rotations = output_rotations(divided_key)
+    end
   end
 
   def generate_original
