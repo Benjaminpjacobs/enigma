@@ -20,5 +20,5 @@ class Crack
 end
 
 ##################################
-# c = Crack.new(ARGV[0], ARGV[1], ARGV[2])
-# c.crack
+c = Crack.new(ARGV[0], ARGV[1], ARGV[2])
+c.crack
