@@ -1,5 +1,4 @@
-require "minitest/autorun"
-require "minitest/pride"
+require './test/test_helper'
 require "./lib/decrypt_message.rb"
 
 class DecryptMessageTest < Minitest::Test

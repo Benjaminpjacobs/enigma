@@ -15,5 +15,4 @@ module MessageIO
   def write_file(file_name, message)
     File.write(file_name, message)
   end
-
 end

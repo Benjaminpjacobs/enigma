@@ -3,7 +3,6 @@ require './lib/crack_message'
 
 class Crack
   include MessageIO
-  attr_reader :input, :output
   
   def initialize(input=nil, output=nil, date=nil)
     @input = input
@@ -15,11 +14,11 @@ class Crack
     message = read_file(@input)
     c = CrackMessage.new(message, @date)
     confirmation = c.crack
-    write_file(output, c.to_crack.message)
+    write_file(@output, c.to_crack.message)
     p confirmation
   end
-
 end
+
 ##################################
 # c = Crack.new(ARGV[0], ARGV[1], ARGV[2])
 # c.crack

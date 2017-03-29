@@ -3,7 +3,6 @@ require './lib/encrypt_message'
 
 class Encrypt
   include MessageIO
-  attr_reader :input, :output
   
   def initialize(input=nil, output=nil, key=nil)
     @input = input
@@ -18,7 +17,6 @@ class Encrypt
     write_file(@output,e.to_encrypt.message)
     p confirmation
   end
-
 end
 
 #########################

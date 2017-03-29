@@ -1,8 +1,8 @@
 require "./lib/encrypt_message"
 require "./lib/decrypt_message"
 require "./lib/crack_message"
-require 'pry'
 class Enigma
+
   def encrypt(message=nil, key=nil, date=Date.today)
     e = EncryptMessage.new(message, key, date)
     e.encrypt

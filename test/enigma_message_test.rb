@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/enigma_message'
 
 class EnigmaMessageTest < Minitest::Test
