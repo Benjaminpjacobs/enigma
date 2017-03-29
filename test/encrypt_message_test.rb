@@ -40,6 +40,6 @@ class EncryptMessageTest < Minitest::Test
   def test_it_can_encrypt_message
     e = EncryptMessage.new
     e.instantiate_message("message ..end..", 12345, Date.new(2017, 03, 28))
-    assert_equal "Message: y5V*m7HgKZH#pZ;. Encrypted with key: 12345 and date: 2017-03-28", e.encrypt
+    assert_equal "Message encrypted with key: 12345 and date: 2017-03-28", e.encrypt
   end
 end

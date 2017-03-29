@@ -1,5 +1,3 @@
-require './lib/cryptor'
-
 class MessageIO
 
   def initialize(message="")

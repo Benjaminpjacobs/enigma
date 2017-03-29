@@ -10,7 +10,7 @@ class EncryptMessage < Cryption
     @to_encrypt = nil
   end
 
-  def instantiate_message(message, key, date)
+  def instantiate_message(message, key=nil, date=Date.today)
     @to_encrypt = Message.new(message, key, date)
   end
 
@@ -21,6 +21,7 @@ class EncryptMessage < Cryption
   
   def get_rotations
     keygen = KeyGen.new(@to_encrypt.key)
+    @to_encrypt.key = keygen.generate_original if @to_encrypt.key.nil?
     @to_encrypt.rotation = keygen.generate
   end
   
@@ -36,6 +37,6 @@ class EncryptMessage < Cryption
     parse_and_split_message
     rotation = rotation_and_offset(@to_encrypt.rotation, @to_encrypt.offset)
     @to_encrypt.message = run_the_cipher(@to_encrypt.message, rotation)
-    "Message: #{@to_encrypt.message}. Encrypted with key: #{@to_encrypt.key} and date: #{@to_encrypt.date.to_s}"
+    "Message encrypted with key: #{@to_encrypt.key} and date: #{@to_encrypt.date.to_s}"
   end
 end

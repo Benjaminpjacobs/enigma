@@ -1,28 +1,30 @@
-require './test/test_helper.rb'
+require 'minitest/autorun'
+require 'minitest/pride'
 require './lib/encrypt'
-require 'pry'
 
 class EncryptTest < Minitest::Test
   def test_it_exists
-    assert_instance_of Encrypt, Encrypt.new
+    e = Encrypt.new
+    assert_instance_of Encrypt, e
   end
-
-  def test_it_encrypt_a_message
-    input_file = "./test/single_line.txt"
-    output_file = "./test/encryptor_message.txt"
-    e = Encrypt.new(input_file, output_file)
+  def test_it_accept_two_arguments
+    e = Encrypt.new('./test/single_line.txt', './test/encrypted_file.txt')
+    assert_equal './test/single_line.txt', e.input
+    assert_equal './test/encrypted_file.txt', e.output
+  end
+  def test_it_can_read_file
+    e = Encrypt.new('./test/single_line.txt', './test/encrypted_file.txt')
+    expected = "This is a coded, gibberish message ..end.."
+    assert_equal expected, e.read_file
+  end
+  def test_it_can_encrypt_file
+    e = Encrypt.new('./test/single_line.txt', './test/encrypted_file.txt', 26078)
+    expected = "Message encrypted with key: 26078 and date: 2017-03-29"
+    assert_equal expected, e.encrypt
+  end
+  def test_it_can_write_file
+    e = Encrypt.new('./test/single_line.txt', './test/encrypted_file.txt', 26078)
     e.encrypt
-    assert File.delete(output_file)
+    assert File.readlines('./test/encrypted_file.txt')
   end
-
-  def test_it_can_encrypt_with_key_and_date
-    input_file = "./test/single_line.txt"
-    output_file = "./test/encrypted_message1.txt"
-    e = Encrypt.new(input_file, 12345, Date.new(2017, 03, 27), output_file)
-    e.encrypt
-    expected = "^8L*J9VgmYF$p5GiJ7LQn5UX48>@qGVPs5"
-    actual = File.read(output_file)
-    assert_equal expected, actual
-  end
-
 end
