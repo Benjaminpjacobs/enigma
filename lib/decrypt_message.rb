@@ -6,11 +6,7 @@ require './lib/message_io'
 
 class DecryptMessage < Cryption
   attr_reader :to_decrypt
-  def initialize
-    @to_decrypt = nil
-  end
-  
-  def instantiate_message(message, key, date)
+  def initialize(message, key, date)
     @to_decrypt = Message.new(message, key, date)
   end
 
@@ -36,7 +32,7 @@ class DecryptMessage < Cryption
     parse_and_split_message
     rotation = rotation_and_offset(@to_decrypt.rotation, @to_decrypt.offset).map{ |n| n * -1 } 
     @to_decrypt.message = run_the_cipher(@to_decrypt.message, rotation)
-    "Message: #{@to_decrypt.message}. Decrypted with key: #{@to_decrypt.key} and date: #{@to_decrypt.date.to_s}"
+    "Message decrypted with key: #{@to_decrypt.key} and date: #{@to_decrypt.date.to_s}"
   end
 
 end

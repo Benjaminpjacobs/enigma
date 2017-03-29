@@ -2,7 +2,7 @@ require './lib/message_io'
 require './lib/encrypt_message'
 
 class Encrypt
-  attr_reader :input, :output, :key
+  attr_reader :input, :output
   
   def initialize(input=nil, output=nil, key=nil)
     @input = input
@@ -30,3 +30,7 @@ class Encrypt
   end
 
 end
+
+#########################
+# e = Encrypt.new(ARGV[0], ARGV[1], ARGV[2])
+# e.encrypt

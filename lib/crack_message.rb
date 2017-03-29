@@ -3,7 +3,7 @@ require './lib/cryption_module'
 require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
-
+require 'pry'
 class CrackMessage < Cryption
   attr_reader :to_crack
 
@@ -78,6 +78,7 @@ class CrackMessage < Cryption
   def crack
     decrypt
     key_from_date
+    binding.pry
     "Message: #{@to_crack.message}. Cracked with key: #{@to_crack.key} and date: #{@to_crack.date.to_s}"
   end
 end

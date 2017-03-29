@@ -4,15 +4,13 @@ require "./lib/crack_message"
 require 'pry'
 class Enigma
   def encrypt(message=nil, key=nil, date=Date.today)
-    e = EncryptMessage.new
-    e.instantiate_message(message, key, date)
+    e = EncryptMessage.new(message, key, date)
     e.encrypt
     e.to_encrypt.message
   end
 
   def decrypt(message=nil, key=nil, date=Date.today)
-    d = DecryptMessage.new
-    d.instantiate_message(message, key, date)
+    d = DecryptMessage.new(message, key, date)
     d.decrypt
     d.to_decrypt.message
   end

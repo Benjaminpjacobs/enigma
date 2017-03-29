@@ -6,11 +6,7 @@ require './lib/message_io'
 
 class EncryptMessage < Cryption
   attr_reader :to_encrypt
-  def initialize
-    @to_encrypt = nil
-  end
-
-  def instantiate_message(message, key=nil, date=Date.today)
+  def initialize(message, key=nil, date=Date.today)
     @to_encrypt = Message.new(message, key, date)
   end
 
