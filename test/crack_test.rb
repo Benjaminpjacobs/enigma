@@ -22,6 +22,8 @@ class CrackTest < Minitest::Test
   
   def test_it_can_write_file
     c = Crack.new(@input, @output, @date)
-    assert File.readlines('./test/cracked.txt')
+    actual = File.read('./test/cracked.txt')
+    expected = "This is a coded, gibberish message ..end.."
+    assert_equal expected, actual
   end
 end

@@ -3,9 +3,9 @@ require './lib/cryption_module'
 require './lib/key_gen'
 require './lib/offset_gen'
 require './lib/message_io'
-
+require 'pry'
 class DecryptMessage 
-  include Cryption,MessageIO, KeyGen, OffsetGen
+  include Cryption, MessageIO, KeyGen, OffsetGen
   attr_reader :to_decrypt
 
   def initialize(message, key, date)
@@ -14,6 +14,16 @@ class DecryptMessage
 
   def get_offset
     @to_decrypt.offset = convert_into_offset(@to_decrypt.date)
+  end
+  
+  def decrypt
+    get_offset
+    get_rotations
+    parse_and_split_message
+    rotation = rotation_and_offset(@to_decrypt.rotation, @to_decrypt.offset).map{ |n| n * -1 } 
+    # binding.pry
+    @to_decrypt.message = run_the_cipher(@to_decrypt.message, rotation)
+    "Message decrypted with key: #{@to_decrypt.key} and date: #{@to_decrypt.date.to_s}"
   end
   
   def get_rotations
@@ -25,14 +35,6 @@ class DecryptMessage
     @to_decrypt.message = split_into_sub_arrays(message)
   end
   
-  def decrypt
-    get_offset
-    get_rotations
-    parse_and_split_message
-    rotation = rotation_and_offset(@to_decrypt.rotation, @to_decrypt.offset).map{ |n| n * -1 } 
-    @to_decrypt.message = run_the_cipher(@to_decrypt.message, rotation)
-    "Message decrypted with key: #{@to_decrypt.key} and date: #{@to_decrypt.date.to_s}"
-  end
 
 end
 

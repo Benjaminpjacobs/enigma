@@ -8,7 +8,7 @@ class Decrypt
     @input = input
     @output = output  
     @key = key
-    @date = date
+    @date = date.nil? ? Date.today : date
   end
 
   def decrypt
@@ -21,5 +21,5 @@ class Decrypt
 end
 
 #######################
-# d = Decrypt.new(ARGV[0], ARGV[1], ARGV[2])
+# d = Decrypt.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
 # d.decrypt
