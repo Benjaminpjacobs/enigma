@@ -102,6 +102,4 @@ class CrackMessage
       number
     end
   end
-
-
 end

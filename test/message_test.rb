@@ -6,6 +6,7 @@ class MessageTest < Minitest::Test
     m = Message.new
     assert_instance_of Message, m
   end
+
   def test_it_can_hold_message_date_and_key
     message = Message.new("message", 12345, Date.today)
     assert_equal "message", message.message
@@ -14,6 +15,7 @@ class MessageTest < Minitest::Test
     assert_nil  message.rotation
     assert_nil message.offset
   end
+  
   def test_it_can_alter_instance_variables
     message = Message.new("message", 12345, Date.today)
     message.message = 'new_message'
@@ -27,5 +29,4 @@ class MessageTest < Minitest::Test
     assert_equal [10,9,8,7], message.rotation
     assert_equal [4,3,2,1], message.offset
   end
-
 end
