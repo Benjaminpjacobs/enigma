@@ -2,7 +2,6 @@ module MessageIO
 
   def read_file(file_name)
     File.read(file_name).gsub("\n", " ")
-    # File.read(file_name)
   end
   
   def parse(message)

@@ -7,7 +7,9 @@ module Cryption
   [" ", ".", ","] + 
   %w(A B C D E F G H I J K L M 
   N O P Q R S T U V W X Y Z) + 
-  ['!','@','#','$','%','^', '&', '*', '(', ')', '[', ']', '<', '>', ';', ':','/','?',"\\",'|']
+  ['!','@','#','$','%','^', '&', 
+  '*', '(', ')', '[', ']', '<', 
+  '>', ';', ':','/','?',"\\",'|']
 
   CIPHER_INDEX = {
       'e' => CIPHER.index('e'), 
@@ -15,17 +17,17 @@ module Cryption
       'd' => CIPHER.index('d'), 
       '.' => CIPHER.index('.')}
 
-  COMPARISON_INDEX = { 4=> [CIPHER_INDEX["n"], CIPHER_INDEX["d"], 
-                            CIPHER_INDEX["."], CIPHER_INDEX["."]], 
-                       3=> [CIPHER_INDEX["."], CIPHER_INDEX["."], 
-                            CIPHER_INDEX["e"], CIPHER_INDEX["n"]],
-                       2=> [CIPHER_INDEX["."], CIPHER_INDEX["e"], 
-                            CIPHER_INDEX["n"], CIPHER_INDEX["d"]],
-                       1=> [CIPHER_INDEX["e"], CIPHER_INDEX["n"], 
-                            CIPHER_INDEX["d"], CIPHER_INDEX["."]]
-                      }
+  COMPARISON_INDEX = 
+      { 4=> [CIPHER_INDEX["n"], CIPHER_INDEX["d"], 
+             CIPHER_INDEX["."], CIPHER_INDEX["."]], 
+        3=> [CIPHER_INDEX["."], CIPHER_INDEX["."], 
+             CIPHER_INDEX["e"], CIPHER_INDEX["n"]],
+        2=> [CIPHER_INDEX["."], CIPHER_INDEX["e"], 
+             CIPHER_INDEX["n"], CIPHER_INDEX["d"]],
+        1=> [CIPHER_INDEX["e"], CIPHER_INDEX["n"], 
+             CIPHER_INDEX["d"], CIPHER_INDEX["."]]
+      }
 
-    
   def rotation_and_offset(rotation, offset)
     combo = rotation.zip(offset)
     combo.map!{|sub_array| sub_array.inject(&:+)}
@@ -57,10 +59,8 @@ module Cryption
         1 => cipher(rotation[1], letter),
         2 => cipher(rotation[2], letter),
         3 => cipher(rotation[3], letter),
-      }
+        }
       cipher_sub_array[index]
     end
   end 
 end
-
-
