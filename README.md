@@ -6,7 +6,7 @@ The engima engine can encrypt, decrypt and crack messages. It can be used in a R
 
 The encryption is based on rotation. The character map is made up of all the lowercase letters, then the numbers, then space, then period, then comma.
 
-# The Key
+### How it works
 
 Each message uses a unique encryption key
 * The key is five digits, like 41521
